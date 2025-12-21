@@ -1,1 +1,49 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Quicksand', cursive;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Colors - Light mode defaults */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-muted: #737373;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-button-bg: rgba(0, 0, 0, 0.1);
+  --color-button-hover: rgba(0, 0, 0, 0.2);
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f46e5;
+}
+
+.dark {
+  /* Colors - Dark mode defaults */
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-muted: #a3a3a3;
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-button-bg: rgba(255, 255, 255, 0.1);
+  --color-button-hover: rgba(255, 255, 255, 0.2);
+  --color-accent: #818cf8;
+  --color-accent-hover: #6366f1;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}

@@ -1,17 +1,52 @@
 ---
+import '../styles/global.css';
 import HelloWorld from '@/components/Hello-World';
+import ThemeToggle from '@/components/ThemeToggle';
+import SoundToggle from '@/components/SoundToggle';
 ---
 
 <html lang='en'>
   <head>
-    <meta charset='utf-8' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <meta name='viewport' content='width=device-width' />
-    <meta name='generator' content={Astro.generator} />
-    <link rel='stylesheet' href='/src/styles/global.css' />
-    <title>Astro</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Quicksand:wght@300..700&display=swap'
+      rel='stylesheet'
+    />
+    <script is:inline>
+      (function () {
+        const theme =
+          localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
-    <HelloWorld />
+    <div class='fixed inset-0 -z-10 overflow-hidden'>
+      <video
+        class='h-full w-full object-cover opacity-30 mix-blend-multiply'
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source src='/background.webm' type='video/webm' />
+        <source src='/background.mp4' type='video/mp4' />
+      </video>
+    </div>
+    <main
+      class='relative z-10 flex flex-col items-center justify-center h-screen'
+    >
+      <HelloWorld />
+      <div class='flex items-center justify-center gap-4 mt-4'>
+        <ThemeToggle client:load />
+        <SoundToggle client:load />
+      </div>
+    </main>
   </body>
 </html>
