@@ -5,7 +5,7 @@
 @theme {
   /* Fonts */
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Quicksand', cursive;
+  --font-display: cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Colors - Light mode defaults */
