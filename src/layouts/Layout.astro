@@ -1,11 +1,5 @@
 ---
 import '../styles/global.css';
-
-interface Props {
-  title?: string;
-}
-
-const { title = 'draguta.dev' } = Astro.props;
 ---
 
 <html lang='en'>
@@ -20,7 +14,7 @@ const { title = 'draguta.dev' } = Astro.props;
       href='https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Quicksand:wght@300..700&display=swap'
       rel='stylesheet'
     />
-    <title>{title}</title>
+    <title>draguta.dev</title>
     <script is:inline>
       (function () {
         const theme =
@@ -37,7 +31,7 @@ const { title = 'draguta.dev' } = Astro.props;
   <body>
     <div class='fixed inset-0 -z-10 overflow-hidden'>
       <video
-        class='h-full w-full object-cover opacity-40 dark:opacity-30 mix-blend-multiply'
+        class='h-full w-full object-cover opacity-20 dark:opacity-30'
         autoplay
         muted
         loop
@@ -46,6 +40,10 @@ const { title = 'draguta.dev' } = Astro.props;
         <source src='/background.webm' type='video/webm' />
         <source src='/background.mp4' type='video/mp4' />
       </video>
+      <div
+        class='absolute inset-0 bg-white/40 dark:bg-transparent pointer-events-none'
+      >
+      </div>
     </div>
     <slot />
   </body>

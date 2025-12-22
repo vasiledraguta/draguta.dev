@@ -1,0 +1,87 @@
+<script>
+  import { animate } from 'motion';
+
+  const copyButton = document.getElementById(
+    'copy-email'
+  ) as HTMLButtonElement | null;
+
+  const animateTextChange = async (
+    element: HTMLElement,
+    newText: string
+  ): Promise<void> => {
+    await animate(element, { opacity: 0, filter: 'blur(4px)' } as any, {
+      duration: 0.15,
+      ease: 'easeOut',
+    }).finished;
+
+    element.textContent = newText;
+
+    await animate(element, { opacity: 1, filter: 'blur(0px)' } as any, {
+      duration: 0.15,
+      ease: 'easeOut',
+    }).finished;
+  };
+
+  copyButton?.addEventListener('click', async () => {
+    if (copyButton.disabled) return;
+
+    const email = copyButton.getAttribute('data-email');
+    const originalText = copyButton.textContent || '';
+
+    if (email) {
+      try {
+        await navigator.clipboard.writeText(email);
+
+        copyButton.disabled = true;
+        await animateTextChange(copyButton, 'copied!');
+
+        setTimeout(async () => {
+          await animateTextChange(copyButton, originalText);
+          copyButton.disabled = false;
+        }, 1200);
+      } catch (err) {
+        console.error('Failed to copy email:', err);
+      }
+    }
+  });
+</script>
+
+<nav class='links-nav flex flex-row items-center gap-3 text-sm'>
+  <a
+    class='link-item'
+    href='https://x.com/vasiledraguta'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    x
+  </a>
+  <span class='opacity-40 pointer-events-none'>//</span>
+  <a
+    class='link-item'
+    href='https://github.com/vasile-draguta'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    github
+  </a>
+  <span class='opacity-40 pointer-events-none'>//</span>
+  <button
+    id='copy-email'
+    class='link-item cursor-pointer'
+    data-email='contact@draguta.dev'
+    title='Click to copy email'
+  >
+    contact@draguta.dev
+  </button>
+</nav>
+
+<style>
+  .link-item {
+    color: var(--color-foreground);
+    transition: color 0.2s;
+  }
+
+  .links-nav:has(.link-item:hover) .link-item:not(:hover) {
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,14 @@
+---
+import ThemeToggle from '@/components/ThemeToggle';
+import SoundToggle from '@/components/SoundToggle';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class='py-8 mt-auto flex items-center justify-between'>
+  <p class='text-muted text-sm font-mono'>© {currentYear} draguta</p>
+  <div class='flex items-center gap-2'>
+    <SoundToggle client:load />
+    <ThemeToggle client:load />
+  </div>
+</footer>

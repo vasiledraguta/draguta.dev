@@ -1,18 +1,30 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import HelloWorld from '@/components/Hello-World';
-import ThemeToggle from '@/components/ThemeToggle';
-import SoundToggle from '@/components/SoundToggle';
+import Links from '@/components/Links.astro';
+import AboutMe from '@/components/AboutMe.astro';
+import Footer from '@/components/Footer.astro';
 ---
 
 <Layout>
-  <main
-    class='relative z-10 flex flex-col items-center justify-center h-screen'
-  >
-    <HelloWorld />
-    <div class='flex items-center justify-center gap-4 mt-4'>
-      <ThemeToggle client:load />
-      <SoundToggle client:load />
-    </div>
+  <main class='relative z-10 flex flex-col min-h-screen max-w-2xl mx-auto px-6'>
+    <!-- Top nav / Links -->
+    <nav class='py-6'>
+      <Links />
+    </nav>
+
+    <!-- Hero section -->
+    <section class='pt-16'>
+      <h1 class='text-lg font-medium inline'>Vasile Draguța</h1>
+      <span class='text-muted text-sm'>/vah-SEE-leh drah-GOO-tsah/</span>
+      <p class='text-muted'>swe based in cluj-napoca</p>
+    </section>
+
+    <!-- About section -->
+    <section class='py-12'>
+      <AboutMe />
+    </section>
+
+    <!-- Footer -->
+    <Footer />
   </main>
 </Layout>
