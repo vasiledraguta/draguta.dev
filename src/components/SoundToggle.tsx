@@ -7,6 +7,19 @@ import {
 const SoundToggle = () => {
   const [isMuted, setIsMuted] = React.useState(true);
 
+  React.useEffect(() => {
+    const handleSoundToggle = (e: CustomEvent<{ muted: boolean }>) => {
+      setIsMuted(e.detail.muted);
+    };
+    window.addEventListener('sound-toggle', handleSoundToggle as EventListener);
+    return () => {
+      window.removeEventListener(
+        'sound-toggle',
+        handleSoundToggle as EventListener
+      );
+    };
+  }, []);
+
   const toggleSound = () => {
     const video = document.querySelector('video');
     if (video) {

@@ -17,6 +17,17 @@ const ThemeToggle = () => {
         : 'light';
     };
     setTheme(getThemePreference());
+
+    const handleThemeToggle = (e: CustomEvent<{ theme: 'light' | 'dark' }>) => {
+      setTheme(e.detail.theme);
+    };
+    window.addEventListener('theme-toggle', handleThemeToggle as EventListener);
+    return () => {
+      window.removeEventListener(
+        'theme-toggle',
+        handleThemeToggle as EventListener
+      );
+    };
   }, []);
 
   React.useEffect(() => {
