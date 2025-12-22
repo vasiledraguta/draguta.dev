@@ -30,7 +30,18 @@
 
     if (email) {
       try {
-        await navigator.clipboard.writeText(email);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(email);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = email;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
 
         copyButton.disabled = true;
         await animateTextChange(copyButton, 'copied!');
