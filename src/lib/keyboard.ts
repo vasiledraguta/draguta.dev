@@ -32,6 +32,9 @@ export function initKeyboardShortcuts() {
       case 't':
         const isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        const audio = new Audio('/light-switch.mp3');
+        audio.volume = 0.5;
+        audio.play();
         window.dispatchEvent(
           new CustomEvent('theme-toggle', {
             detail: { theme: isDark ? 'dark' : 'light' },

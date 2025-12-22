@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { MoonIcon, SunIcon } from '@phosphor-icons/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const ThemeToggle = () => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
@@ -39,15 +40,29 @@ const ThemeToggle = () => {
   }, [theme]);
 
   const toggleTheme = () => {
+    const audio = new Audio('/light-switch.mp3');
+    audio.volume = 0.5;
+    audio.play();
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   return (
     <button
       onClick={toggleTheme}
-      className='flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground'
+      className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden'
     >
-      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      <AnimatePresence mode='wait' initial={false}>
+        <motion.span
+          key={theme}
+          initial={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
+          transition={{ duration: 0.1, ease: 'easeOut' }}
+          className='flex items-center justify-center'
+        >
+          {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+        </motion.span>
+      </AnimatePresence>
     </button>
   );
 };
