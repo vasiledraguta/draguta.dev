@@ -31,6 +31,7 @@ import '../styles/global.css';
   <body>
     <div class='fixed inset-0 -z-10 overflow-hidden'>
       <video
+        id='bg-video'
         class='h-full w-full object-cover opacity-20 dark:opacity-30'
         autoplay
         muted
@@ -41,10 +42,29 @@ import '../styles/global.css';
         <source src='/background.mp4' type='video/mp4' />
       </video>
       <div
-        class='absolute inset-0 bg-white/40 dark:bg-transparent pointer-events-none'
+        class='absolute inset-0 bg-white/20 dark:bg-transparent pointer-events-none'
       >
       </div>
     </div>
     <slot />
+    <script is:inline>
+      (function () {
+        const video = document.getElementById('bg-video');
+        if (!video) return;
+
+        const savedTime = localStorage.getItem('video-time');
+        if (savedTime) {
+          video.currentTime = parseFloat(savedTime);
+        }
+
+        setInterval(() => {
+          localStorage.setItem('video-time', video.currentTime.toString());
+        }, 500);
+
+        window.addEventListener('beforeunload', () => {
+          localStorage.setItem('video-time', video.currentTime.toString());
+        });
+      })();
+    </script>
   </body>
 </html>
