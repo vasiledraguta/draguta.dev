@@ -49,7 +49,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden'
+      className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden cursor-pointer'
     >
       <AnimatePresence mode='wait' initial={false}>
         <motion.span
