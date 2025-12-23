@@ -31,7 +31,8 @@ const interests = [
   </p>
 
   <p class='leading-relaxed text-muted'>
-    i like{' '}<span class='inline-flex flex-wrap items-baseline'
+    i like{' '}<span
+      class='inline sm:inline-flex sm:flex-wrap sm:items-baseline'
       >{
         interests.map((item, index) => (
           <>
@@ -41,14 +42,23 @@ const interests = [
               imageSrc={item.image}
               imageAlt={item.text}
             />
-            <span>
+            <span class='hidden sm:inline'>
               {index < interests.length - 2
                 ? ','
                 : index === interests.length - 2
                   ? ', and'
                   : '.'}
             </span>
-            {index < interests.length - 1 && <span>&nbsp;</span>}
+            <span class='sm:hidden -ml-1'>
+              {index < interests.length - 2
+                ? ', '
+                : index === interests.length - 2
+                  ? ', and '
+                  : '.'}
+            </span>
+            {index < interests.length - 1 && (
+              <span class='hidden sm:inline'>&nbsp;</span>
+            )}
           </>
         ))
       }</span

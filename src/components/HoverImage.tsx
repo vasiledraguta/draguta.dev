@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface HoverImageProps {
@@ -14,18 +14,54 @@ export default function HoverImage({
   imageAlt = '',
   className = '',
 }: HoverImageProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLSpanElement>(null);
+
+  const hasHover =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(hover: hover)').matches;
+
+  const handleMouseEnter = useCallback(() => {
+    if (hasHover) setIsOpen(true);
+  }, [hasHover]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (hasHover) setIsOpen(false);
+  }, [hasHover]);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (hasHover) return;
+      e.preventDefault();
+
+      if (!isOpen) {
+        setIsOpen(true);
+        const closeOnOutsideTouch = (event: TouchEvent) => {
+          if (!containerRef.current?.contains(event.target as Node)) {
+            setIsOpen(false);
+            document.removeEventListener('touchstart', closeOnOutsideTouch);
+          }
+        };
+        setTimeout(() => {
+          document.addEventListener('touchstart', closeOnOutsideTouch);
+        }, 50);
+      }
+    },
+    [hasHover, isOpen]
+  );
 
   return (
     <span
+      ref={containerRef}
       className={`relative inline-block cursor-default overflow-visible ${className}`}
       style={{ overflow: 'visible' }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchEnd={handleTouchEnd}
     >
       {text}
       <AnimatePresence>
-        {isHovered && (
+        {isOpen && (
           <span
             className='absolute bottom-full left-1/2 flex flex-col items-center'
             style={{ transform: 'translateX(-50%)' }}
