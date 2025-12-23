@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 ---
 
 <html lang='en'>
@@ -15,16 +16,25 @@ import '../styles/global.css';
       rel='stylesheet'
     />
     <title>draguta.dev</title>
+    <ClientRouter />
     <script is:inline>
       (function () {
-        const theme =
-          localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light');
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+        function applyTheme() {
+          const theme =
+            localStorage.getItem('theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
         }
+
+        applyTheme();
+
+        document.addEventListener('astro:after-swap', applyTheme);
       })();
     </script>
   </head>
@@ -32,6 +42,7 @@ import '../styles/global.css';
     <div
       id='video-container'
       class='fixed inset-0 -z-10 overflow-hidden transition-opacity duration-500'
+      transition:persist
     >
       <video
         id='bg-video'
