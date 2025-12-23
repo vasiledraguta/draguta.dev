@@ -1,0 +1,26 @@
+---
+
+---
+
+<div
+  id='video-container'
+  class='fixed inset-0 -z-10 overflow-hidden transition-opacity duration-500'
+  transition:persist
+>
+  <video
+    id='bg-video'
+    class='h-full w-full object-cover opacity-20 dark:opacity-30 transition-opacity duration-500'
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+    <source src='/background.webm' type='video/webm' />
+    <source src='/background.mp4' type='video/mp4' />
+  </video>
+  <div
+    id='video-overlay'
+    class='absolute inset-0 bg-white/20 dark:bg-transparent pointer-events-none transition-opacity duration-500'
+  >
+  </div>
+</div>

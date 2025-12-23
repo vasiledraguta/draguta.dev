@@ -1,26 +1,16 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Links from '@/components/Links.astro';
 import AboutMe from '@/components/AboutMe.astro';
-import Footer from '@/components/Footer.astro';
 ---
 
 <Layout>
-  <main class='relative z-10 flex flex-col min-h-screen max-w-4xl mx-auto px-8'>
-    <nav class='py-6'>
-      <Links />
-    </nav>
+  <section class='pt-16'>
+    <h1 class='text-2xl font-medium'>Vasile Draguța</h1>
+    <span class='text-muted text-sm'>/vah-SEE-leh drah-GOO-tsah/</span>
+    <p class='text-muted text-lg'>swe based in cluj-napoca</p>
+  </section>
 
-    <section class='pt-16'>
-      <h1 class='text-2xl font-medium'>Vasile Draguța</h1>
-      <span class='text-muted text-sm'>/vah-SEE-leh drah-GOO-tsah/</span>
-      <p class='text-muted text-lg'>swe based in cluj-napoca</p>
-    </section>
-
-    <section class='py-12'>
-      <AboutMe />
-    </section>
-
-    <Footer />
-  </main>
+  <section class='py-12'>
+    <AboutMe />
+  </section>
 </Layout>

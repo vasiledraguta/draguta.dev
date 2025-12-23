@@ -1,21 +1,69 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import VideoBackground from '@/components/VideoBackground.astro';
+import Links from '@/components/Links.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'draguta.dev',
+  description = 'Software engineer based in Cluj-Napoca. Building things that matter.',
+  image = '/og-image.png',
+} = Astro.props;
+
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site || 'https://draguta.dev'
+);
+const fullTitle = title === 'draguta.dev' ? title : `${title} | draguta.dev`;
 ---
 
 <html lang='en'>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <meta name='description' content='draguta.dev - Personal website' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.png' />
+
+    <!-- SEO -->
+    <title>{fullTitle}</title>
+    <meta name='description' content={description} />
+    <link rel='canonical' href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content={canonicalURL} />
+    <meta property='og:title' content={fullTitle} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content={image} />
+
+    <!-- Twitter -->
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:site' content='@vasiledraguta' />
+    <meta name='twitter:title' content={fullTitle} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={image} />
+
+    <link rel='icon' type='image/png' href='/favicon.png' />
+
+    <link
+      rel='preload'
+      href='https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2'
+      as='font'
+      type='font/woff2'
+      crossorigin
+    />
+
     <link rel='preconnect' href='https://fonts.googleapis.com' />
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
     <link
       href='https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'
       rel='stylesheet'
     />
-    <title>draguta.dev</title>
     <ClientRouter />
     <script is:inline>
       (function () {
@@ -39,30 +87,17 @@ import { ClientRouter } from 'astro:transitions';
     </script>
   </head>
   <body>
-    <div
-      id='video-container'
-      class='fixed inset-0 -z-10 overflow-hidden transition-opacity duration-500'
-      transition:persist
-    >
-      <video
-        id='bg-video'
-        class='h-full w-full object-cover opacity-20 dark:opacity-30 transition-opacity duration-500'
-        autoplay
-        muted
-        loop
-        playsinline
-      >
-        <source src='/background.webm' type='video/webm' />
-        <source src='/background.mp4' type='video/mp4' />
-      </video>
-      <div
-        id='video-overlay'
-        class='absolute inset-0 bg-white/20 dark:bg-transparent pointer-events-none transition-opacity duration-500'
-      >
-      </div>
-    </div>
+    <VideoBackground />
     <div id='site-content' class='transition-opacity duration-500'>
-      <slot />
+      <main
+        class='relative z-10 flex flex-col min-h-screen max-w-4xl mx-auto px-8'
+      >
+        <nav class='py-6'>
+          <Links />
+        </nav>
+        <slot />
+        <Footer />
+      </main>
     </div>
     <script>
       import { initVideo } from '@/lib/video';
