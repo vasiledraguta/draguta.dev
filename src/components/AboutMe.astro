@@ -1,3 +1,15 @@
+---
+import HoverImage from './HoverImage';
+
+const interests = [
+  { text: 'technology', image: '/images/technology.jpg' },
+  { text: 'memes', image: '/images/memes.jpg' },
+  { text: 'sports', image: '/images/sports.jpg' },
+  { text: 'video games', image: '/images/videogames.jpg' },
+  { text: 'music', image: '/images/music.jpg' },
+];
+---
+
 <section class='max-w-4xl space-y-8 text-lg'>
   <p class='leading-relaxed'>
     i'm a software engineer currently in my third year studying computer science
@@ -13,12 +25,33 @@
 
   <p class='leading-relaxed'>
     started programming because i wanted to take things apart and see how they
-    actually work. it wasn’t just about the syntax, it was about the way things
+    actually work. it wasn't just about the syntax, it was about the way things
     fit together. that drive to understand the 'why' is still what keeps me
     building today.
   </p>
 
   <p class='leading-relaxed text-muted'>
-    i like technology, memes, sports, video games, and cats.
+    i like{' '}<span class='inline-flex flex-wrap items-baseline'
+      >{
+        interests.map((item, index) => (
+          <>
+            <HoverImage
+              client:load
+              text={item.text}
+              imageSrc={item.image}
+              imageAlt={item.text}
+            />
+            <span>
+              {index < interests.length - 2
+                ? ','
+                : index === interests.length - 2
+                  ? ', and'
+                  : '.'}
+            </span>
+            {index < interests.length - 1 && <span>&nbsp;</span>}
+          </>
+        ))
+      }</span
+    >
   </p>
 </section>
