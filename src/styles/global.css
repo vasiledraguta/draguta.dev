@@ -15,8 +15,8 @@
   --color-border: rgba(0, 0, 0, 0.1);
   --color-button-bg: rgba(0, 0, 0, 0.1);
   --color-button-hover: rgba(0, 0, 0, 0.2);
-  --color-accent: #6366f1;
-  --color-accent-hover: #4f46e5;
+  --color-accent: #d97706;
+  --color-accent-hover: #b45309;
 }
 
 .dark {
@@ -27,8 +27,8 @@
   --color-border: rgba(255, 255, 255, 0.2);
   --color-button-bg: rgba(255, 255, 255, 0.1);
   --color-button-hover: rgba(255, 255, 255, 0.2);
-  --color-accent: #818cf8;
-  --color-accent-hover: #6366f1;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
 }
 
 body {
@@ -40,10 +40,4 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
 }
