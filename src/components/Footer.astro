@@ -6,7 +6,13 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class='py-8 mt-auto flex items-center justify-between'>
-  <p class='text-muted text-sm font-mono'>© {currentYear} draguta</p>
+  <div class='flex items-center gap-3 text-muted text-sm font-mono'>
+    <p>© {currentYear} draguta</p>
+    <span class='opacity-40'>/</span>
+    <a href='/credits' class='hover:text-foreground transition-colors'
+      >credits</a
+    >
+  </div>
   <div class='flex items-center gap-2'>
     <SoundToggle client:load />
     <ThemeToggle client:load />
