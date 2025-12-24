@@ -1,10 +1,6 @@
 <script>
   import { animate } from 'motion';
 
-  const copyButton = document.getElementById(
-    'copy-email'
-  ) as HTMLButtonElement | null;
-
   const animateTextChange = async (
     element: HTMLElement,
     newText: string
@@ -22,39 +18,51 @@
     }).finished;
   };
 
-  copyButton?.addEventListener('click', async () => {
-    if (copyButton.disabled) return;
+  function initCopyEmail() {
+    const copyButton = document.getElementById(
+      'copy-email'
+    ) as HTMLButtonElement | null;
 
-    const email = copyButton.getAttribute('data-email');
-    const originalText = copyButton.textContent || '';
+    if (!copyButton || copyButton.dataset.initialized) return;
+    copyButton.dataset.initialized = 'true';
 
-    if (email) {
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(email);
-        } else {
-          const textArea = document.createElement('textarea');
-          textArea.value = email;
-          textArea.style.position = 'fixed';
-          textArea.style.left = '-9999px';
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
+    copyButton.addEventListener('click', async () => {
+      if (copyButton.disabled) return;
+
+      const email = copyButton.getAttribute('data-email');
+      const originalText = copyButton.textContent || '';
+
+      if (email) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(email);
+          } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = email;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+          }
+
+          copyButton.disabled = true;
+          await animateTextChange(copyButton, 'copied!');
+
+          setTimeout(async () => {
+            await animateTextChange(copyButton, originalText);
+            copyButton.disabled = false;
+          }, 1200);
+        } catch (err) {
+          console.error('Failed to copy email:', err);
         }
-
-        copyButton.disabled = true;
-        await animateTextChange(copyButton, 'copied!');
-
-        setTimeout(async () => {
-          await animateTextChange(copyButton, originalText);
-          copyButton.disabled = false;
-        }, 1200);
-      } catch (err) {
-        console.error('Failed to copy email:', err);
       }
-    }
-  });
+    });
+  }
+
+  initCopyEmail();
+  document.addEventListener('astro:page-load', initCopyEmail);
 </script>
 
 <nav class='links-nav flex flex-row items-center gap-3 text-sm'>

@@ -8,12 +8,12 @@ interface HoverImageProps {
   className?: string;
 }
 
-export default function HoverImage({
+const HoverImage = ({
   text,
   imageSrc,
   imageAlt = '',
   className = '',
-}: HoverImageProps) {
+}: HoverImageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLSpanElement>(null);
 
@@ -139,4 +139,6 @@ export default function HoverImage({
       </AnimatePresence>
     </span>
   );
-}
+};
+
+export default HoverImage;
