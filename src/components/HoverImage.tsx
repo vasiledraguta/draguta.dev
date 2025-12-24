@@ -80,6 +80,12 @@ const HoverImage = ({
                 rotate: 3,
                 scale: 1,
                 y: 0,
+                transition: {
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 20,
+                  duration: 0.2,
+                },
               }}
               exit={{
                 opacity: 0,
@@ -87,30 +93,9 @@ const HoverImage = ({
                 rotate: -8,
                 scale: 0.9,
                 y: 10,
-              }}
-              transition={{
-                opacity: { duration: 0.2, ease: 'easeOut' },
-                filter: { duration: 0.2, ease: 'easeOut' },
-                rotate: {
+                transition: {
                   duration: 0.2,
                   ease: 'easeOut',
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 10,
-                },
-                scale: {
-                  duration: 0.2,
-                  ease: 'easeOut',
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 10,
-                },
-                y: {
-                  duration: 0.2,
-                  ease: 'easeOut',
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 10,
                 },
               }}
               style={{
