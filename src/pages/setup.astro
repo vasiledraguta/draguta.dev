@@ -25,15 +25,13 @@ import { LinkIcon } from '@phosphor-icons/react';
                         href={item.link}
                         target='_blank'
                         rel='noopener noreferrer'
-                        class='font-medium text-foreground hover:text-accent-hover hover:transition-colors'
+                        class='text-foreground hover:text-accent-hover hover:transition-colors'
                       >
                         {item.name}
                         <LinkIcon className='inline w-3.5 h-3.5 ml-1 opacity-40' />
                       </a>
                     ) : (
-                      <span class='font-medium text-foreground'>
-                        {item.name}
-                      </span>
+                      <span class='text-foreground'>{item.name}</span>
                     )}
                   </div>
                   {item.description && (
