@@ -9,12 +9,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  wide?: boolean;
 }
 
 const {
   title = 'draguta.dev',
   description = 'Software engineer based in Cluj-Napoca. Building things that matter.',
   image = '/og-image.png',
+  wide = false,
 } = Astro.props;
 
 const canonicalURL = new URL(
@@ -92,7 +94,10 @@ const fullTitle = title === 'draguta.dev' ? title : `${title} | draguta.dev`;
     <div id='site-content' class='transition-opacity duration-500'>
       <main
         id='main-content'
-        class='relative z-10 flex flex-col min-h-screen max-w-4xl mx-auto px-8'
+        class:list={[
+          'relative z-10 flex flex-col min-h-screen mx-auto px-8',
+          wide ? 'max-w-6xl' : 'max-w-4xl',
+        ]}
       >
         <nav class='py-6' aria-label='Social links'>
           <Links />

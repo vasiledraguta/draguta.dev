@@ -39,7 +39,7 @@ const ProjectList = ({ projects }: ProjectListProps) => {
   };
 
   return (
-    <div className='flex gap-16 items-center'>
+    <div className='flex gap-16 items-stretch'>
       <ul
         ref={listRef}
         className='relative flex-1 max-w-md space-y-1'
@@ -62,7 +62,7 @@ const ProjectList = ({ projects }: ProjectListProps) => {
         ))}
       </ul>
 
-      <div className='hidden sm:flex flex-1 items-center justify-center min-h-[300px]'>
+      <div className='hidden sm:flex flex-1 items-center justify-center'>
         <AnimatePresence mode='wait'>
           {currentProject?.image && (
             <ProjectImage

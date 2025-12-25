@@ -26,7 +26,7 @@ const ProjectImage = ({ src, alt }: ProjectImageProps) => {
           ? { duration: 0 }
           : { duration: 0.15, ease: 'easeOut' }
       }
-      className='w-80 aspect-3/4 rounded-2xl shadow-2xl overflow-hidden'
+      className='h-full max-h-[500px] aspect-square rounded-2xl shadow-2xl overflow-hidden'
     >
       <img src={src} alt={alt} className='w-full h-full object-cover' />
     </motion.div>
