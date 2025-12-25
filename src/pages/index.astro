@@ -1,9 +1,17 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import AboutMe from '@/components/AboutMe.astro';
+
+const interestImages = [
+  '/interests/technology.jpg',
+  '/interests/memes.jpg',
+  '/interests/sports.jpg',
+  '/interests/videogames.jpg',
+  '/interests/music.jpg',
+];
 ---
 
-<Layout>
+<Layout preloadImages={interestImages}>
   <section class='pt-16'>
     <h1 class='text-3xl font-medium font-display'>Vasile Draguța</h1>
     <span class='text-muted/60 text-xs tracking-wide'

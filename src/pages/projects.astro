@@ -2,9 +2,18 @@
 import Layout from '@/layouts/Layout.astro';
 import ProjectList from '@/components/ProjectList';
 import { projects } from '@/data/projects';
+
+const projectImages = projects
+  .map((p) => p.image)
+  .filter((image): image is string => typeof image === 'string');
 ---
 
-<Layout title='projects' description='things I have built' wide>
+<Layout
+  title='projects'
+  description='things I have built'
+  wide
+  preloadImages={projectImages}
+>
   <section class='pt-16 flex-1 flex flex-col'>
     <h1 class='text-3xl font-medium mb-2 font-display'>projects</h1>
     <p class='text-muted text-sm mb-8'>things i've built and worked on.</p>
