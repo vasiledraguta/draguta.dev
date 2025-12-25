@@ -87,12 +87,14 @@ const fullTitle = title === 'draguta.dev' ? title : `${title} | draguta.dev`;
     </script>
   </head>
   <body>
+    <a href='#main-content' class='skip-link'>Skip to content</a>
     <VideoBackground />
     <div id='site-content' class='transition-opacity duration-500'>
       <main
+        id='main-content'
         class='relative z-10 flex flex-col min-h-screen max-w-4xl mx-auto px-8'
       >
-        <nav class='py-6'>
+        <nav class='py-6' aria-label='Social links'>
           <Links />
         </nav>
         <slot />

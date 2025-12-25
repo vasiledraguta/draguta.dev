@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 interface GlassIndicatorProps {
   style: {
@@ -10,15 +10,21 @@ interface GlassIndicatorProps {
 }
 
 const GlassIndicator = ({ style }: GlassIndicatorProps) => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.span
       className='absolute rounded-2xl -z-10 pointer-events-none'
-      initial={{ opacity: 0, ...style }}
+      initial={
+        prefersReducedMotion
+          ? { opacity: 1, ...style }
+          : { opacity: 0, ...style }
+      }
       animate={{
         opacity: 1,
         ...style,
       }}
-      exit={{ opacity: 0 }}
+      exit={prefersReducedMotion ? undefined : { opacity: 0 }}
       style={{
         background:
           'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%)',
@@ -30,7 +36,11 @@ const GlassIndicator = ({ style }: GlassIndicatorProps) => {
           0 8px 24px -8px rgba(0,0,0,0.15)
         `,
       }}
-      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : { type: 'spring', stiffness: 500, damping: 35 }
+      }
     />
   );
 };

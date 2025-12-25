@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { MoonIcon, SunIcon } from '@phosphor-icons/react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 const ThemeToggle = () => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
+  const prefersReducedMotion = useReducedMotion();
 
   React.useEffect(() => {
     const getThemePreference = (): 'light' | 'dark' => {
@@ -49,18 +50,37 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
+      aria-label={
+        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+      }
       className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden cursor-pointer'
     >
       <AnimatePresence mode='wait' initial={false}>
         <motion.span
           key={theme}
-          initial={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+          }
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
-          transition={{ duration: 0.1, ease: 'easeOut' }}
+          exit={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+          }
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { duration: 0.1, ease: 'easeOut' }
+          }
           className='flex items-center justify-center'
         >
-          {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          {theme === 'dark' ? (
+            <SunIcon aria-hidden='true' />
+          ) : (
+            <MoonIcon aria-hidden='true' />
+          )}
         </motion.span>
       </AnimatePresence>
     </button>

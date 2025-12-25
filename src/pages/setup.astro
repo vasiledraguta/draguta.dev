@@ -28,7 +28,11 @@ import { LinkIcon } from '@phosphor-icons/react';
                         class='text-foreground hover:text-accent-hover transition-colors'
                       >
                         {item.name}
-                        <LinkIcon className='inline w-3.5 h-3.5 ml-1 opacity-40' />
+                        <LinkIcon
+                          className='inline w-3.5 h-3.5 ml-1 opacity-40'
+                          aria-hidden='true'
+                        />
+                        <span class='sr-only'>(opens in new tab)</span>
                       </a>
                     ) : (
                       <span class='text-foreground'>{item.name}</span>

@@ -3,10 +3,11 @@ import {
   SpeakerSimpleHighIcon,
   SpeakerSimpleSlashIcon,
 } from '@phosphor-icons/react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 const SoundToggle = () => {
   const [isMuted, setIsMuted] = React.useState(true);
+  const prefersReducedMotion = useReducedMotion();
 
   React.useEffect(() => {
     const handleSoundToggle = (e: CustomEvent<{ muted: boolean }>) => {
@@ -32,18 +33,35 @@ const SoundToggle = () => {
   return (
     <button
       onClick={toggleSound}
+      aria-label={isMuted ? 'Unmute background audio' : 'Mute background audio'}
       className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden cursor-pointer'
     >
       <AnimatePresence mode='wait' initial={false}>
         <motion.span
           key={isMuted ? 'muted' : 'unmuted'}
-          initial={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+          }
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }}
-          transition={{ duration: 0.1, ease: 'easeOut' }}
+          exit={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+          }
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { duration: 0.1, ease: 'easeOut' }
+          }
           className='flex items-center justify-center'
         >
-          {isMuted ? <SpeakerSimpleSlashIcon /> : <SpeakerSimpleHighIcon />}
+          {isMuted ? (
+            <SpeakerSimpleSlashIcon aria-hidden='true' />
+          ) : (
+            <SpeakerSimpleHighIcon aria-hidden='true' />
+          )}
         </motion.span>
       </AnimatePresence>
     </button>

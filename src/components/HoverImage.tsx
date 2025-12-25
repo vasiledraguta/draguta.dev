@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface HoverImageProps {
   text: string;
@@ -16,6 +16,7 @@ const HoverImage = ({
 }: HoverImageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLSpanElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const hasHover =
     typeof window !== 'undefined' &&
@@ -67,42 +68,54 @@ const HoverImage = ({
             style={{ transform: 'translateX(-50%)' }}
           >
             <motion.div
-              initial={{
-                opacity: 0,
-                filter: 'blur(8px)',
-                rotate: -8,
-                scale: 0.9,
-                y: 10,
-              }}
+              initial={
+                prefersReducedMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      filter: 'blur(8px)',
+                      rotate: -8,
+                      scale: 0.9,
+                      y: 10,
+                    }
+              }
               animate={{
                 opacity: 1,
                 filter: 'blur(0px)',
-                rotate: 3,
+                rotate: prefersReducedMotion ? 0 : 3,
                 scale: 1,
                 y: 0,
-                transition: {
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 20,
-                  duration: 0.2,
-                },
+                transition: prefersReducedMotion
+                  ? { duration: 0 }
+                  : {
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 20,
+                      duration: 0.2,
+                    },
               }}
-              exit={{
-                opacity: 0,
-                filter: 'blur(8px)',
-                rotate: -8,
-                scale: 0.9,
-                y: 10,
-                transition: {
-                  duration: 0.2,
-                  ease: 'easeOut',
-                },
-              }}
+              exit={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      opacity: 0,
+                      filter: 'blur(8px)',
+                      rotate: -8,
+                      scale: 0.9,
+                      y: 10,
+                      transition: {
+                        duration: 0.2,
+                        ease: 'easeOut',
+                      },
+                    }
+              }
               style={{
                 width: 160,
                 height: 160,
                 marginBottom: 8,
-                willChange: 'transform, opacity, filter',
+                willChange: prefersReducedMotion
+                  ? 'auto'
+                  : 'transform, opacity, filter',
               }}
               className='relative rounded-xl shadow-2xl overflow-hidden bg-zinc-800'
             >
