@@ -1,6 +1,9 @@
 <script>
   import { animate } from 'motion';
 
+  const getEmail = () =>
+    ['hello', 'draguta', 'dev'].join('@').replace('@dev', '.dev');
+
   const animateTextChange = async (
     element: HTMLElement,
     newText: string
@@ -26,42 +29,43 @@
     if (!copyButton || copyButton.dataset.initialized) return;
     copyButton.dataset.initialized = 'true';
 
+    const email = getEmail();
+    copyButton.textContent = email;
+    copyButton.setAttribute('aria-label', `Copy email address ${email}`);
+
     copyButton.addEventListener('click', async () => {
       if (copyButton.disabled) return;
 
-      const email = copyButton.getAttribute('data-email');
-      const originalText = copyButton.textContent || '';
+      const originalText = email;
 
-      if (email) {
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(email);
-          } else {
-            const textArea = document.createElement('textarea');
-            textArea.value = email;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-9999px';
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-          }
-
-          copyButton.disabled = true;
-          await animateTextChange(copyButton, 'copied!');
-
-          const statusEl = document.getElementById('copy-status');
-          if (statusEl)
-            statusEl.textContent = 'Email address copied to clipboard';
-
-          setTimeout(async () => {
-            await animateTextChange(copyButton, originalText);
-            copyButton.disabled = false;
-            if (statusEl) statusEl.textContent = '';
-          }, 1200);
-        } catch (err) {
-          console.error('Failed to copy email:', err);
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(email);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = email;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
         }
+
+        copyButton.disabled = true;
+        await animateTextChange(copyButton, 'copied!');
+
+        const statusEl = document.getElementById('copy-status');
+        if (statusEl)
+          statusEl.textContent = 'Email address copied to clipboard';
+
+        setTimeout(async () => {
+          await animateTextChange(copyButton, originalText);
+          copyButton.disabled = false;
+          if (statusEl) statusEl.textContent = '';
+        }, 1200);
+      } catch (err) {
+        console.error('Failed to copy email:', err);
       }
     });
   }
@@ -92,10 +96,9 @@
   <button
     id='copy-email'
     class='link-item cursor-pointer'
-    data-email='hello@draguta.dev'
-    aria-label='Copy email address hello@draguta.dev'
+    aria-label='Copy email address'
   >
-    hello@draguta.dev
+    loading...
   </button>
   <span id='copy-status' class='sr-only' aria-live='polite'></span>
 </nav>
