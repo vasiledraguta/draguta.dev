@@ -1,115 +1,115 @@
 <script>
-  import { animate } from 'motion';
+	import { animate } from 'motion';
 
-  const getEmail = () =>
-    ['hello', 'draguta', 'dev'].join('@').replace('@dev', '.dev');
+	const getEmail = () =>
+		['hello', 'draguta', 'dev'].join('@').replace('@dev', '.dev');
 
-  const animateTextChange = async (
-    element: HTMLElement,
-    newText: string
-  ): Promise<void> => {
-    await animate(element, { opacity: 0, filter: 'blur(4px)' } as any, {
-      duration: 0.15,
-      ease: 'easeOut',
-    }).finished;
+	const animateTextChange = async (
+		element: HTMLElement,
+		newText: string
+	): Promise<void> => {
+		await animate(element, { opacity: 0, filter: 'blur(4px)' } as any, {
+			duration: 0.15,
+			ease: 'easeOut',
+		}).finished;
 
-    element.textContent = newText;
+		element.textContent = newText;
 
-    await animate(element, { opacity: 1, filter: 'blur(0px)' } as any, {
-      duration: 0.15,
-      ease: 'easeOut',
-    }).finished;
-  };
+		await animate(element, { opacity: 1, filter: 'blur(0px)' } as any, {
+			duration: 0.15,
+			ease: 'easeOut',
+		}).finished;
+	};
 
-  function initCopyEmail() {
-    const copyButton = document.getElementById(
-      'copy-email'
-    ) as HTMLButtonElement | null;
+	function initCopyEmail() {
+		const copyButton = document.getElementById(
+			'copy-email'
+		) as HTMLButtonElement | null;
 
-    if (!copyButton || copyButton.dataset.initialized) return;
-    copyButton.dataset.initialized = 'true';
+		if (!copyButton || copyButton.dataset.initialized) return;
+		copyButton.dataset.initialized = 'true';
 
-    const email = getEmail();
-    copyButton.textContent = email;
-    copyButton.setAttribute('aria-label', `Copy email address ${email}`);
+		const email = getEmail();
+		copyButton.textContent = email;
+		copyButton.setAttribute('aria-label', `Copy email address ${email}`);
 
-    copyButton.addEventListener('click', async () => {
-      if (copyButton.disabled) return;
+		copyButton.addEventListener('click', async () => {
+			if (copyButton.disabled) return;
 
-      const originalText = email;
+			const originalText = email;
 
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(email);
-        } else {
-          const textArea = document.createElement('textarea');
-          textArea.value = email;
-          textArea.style.position = 'fixed';
-          textArea.style.left = '-9999px';
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-        }
+			try {
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					await navigator.clipboard.writeText(email);
+				} else {
+					const textArea = document.createElement('textarea');
+					textArea.value = email;
+					textArea.style.position = 'fixed';
+					textArea.style.left = '-9999px';
+					document.body.appendChild(textArea);
+					textArea.select();
+					document.execCommand('copy');
+					document.body.removeChild(textArea);
+				}
 
-        copyButton.disabled = true;
-        await animateTextChange(copyButton, 'copied!');
+				copyButton.disabled = true;
+				await animateTextChange(copyButton, 'copied!');
 
-        const statusEl = document.getElementById('copy-status');
-        if (statusEl)
-          statusEl.textContent = 'Email address copied to clipboard';
+				const statusEl = document.getElementById('copy-status');
+				if (statusEl)
+					statusEl.textContent = 'Email address copied to clipboard';
 
-        setTimeout(async () => {
-          await animateTextChange(copyButton, originalText);
-          copyButton.disabled = false;
-          if (statusEl) statusEl.textContent = '';
-        }, 1200);
-      } catch (err) {
-        console.error('Failed to copy email:', err);
-      }
-    });
-  }
+				setTimeout(async () => {
+					await animateTextChange(copyButton, originalText);
+					copyButton.disabled = false;
+					if (statusEl) statusEl.textContent = '';
+				}, 1200);
+			} catch (err) {
+				console.error('Failed to copy email:', err);
+			}
+		});
+	}
 
-  initCopyEmail();
-  document.addEventListener('astro:page-load', initCopyEmail);
+	initCopyEmail();
+	document.addEventListener('astro:page-load', initCopyEmail);
 </script>
 
 <nav class='links-nav flex flex-row items-center gap-3 text-sm'>
-  <a
-    class='link-item px-2 py-1 -mx-2 -my-1'
-    href='https://x.com/vasiledraguta'
-    target='_blank'
-    rel='noopener noreferrer'
-  >
-    x<span class='sr-only'> (opens in new tab)</span>
-  </a>
-  <span class='opacity-40 pointer-events-none' aria-hidden='true'>//</span>
-  <a
-    class='link-item'
-    href='https://github.com/vasile-draguta'
-    target='_blank'
-    rel='noopener noreferrer'
-  >
-    github<span class='sr-only'> (opens in new tab)</span>
-  </a>
-  <span class='opacity-40 pointer-events-none' aria-hidden='true'>//</span>
-  <button
-    id='copy-email'
-    class='link-item cursor-pointer'
-    aria-label='Copy email address'
-  >
-    loading...
-  </button>
-  <span id='copy-status' class='sr-only' aria-live='polite'></span>
+	<a
+		class='link-item px-2 py-1 -mx-2 -my-1'
+		href='https://x.com/vasiledraguta'
+		target='_blank'
+		rel='noopener noreferrer'
+	>
+		x<span class='sr-only'> (opens in new tab)</span>
+	</a>
+	<span class='opacity-40 pointer-events-none' aria-hidden='true'>//</span>
+	<a
+		class='link-item'
+		href='https://github.com/vasiledraguta'
+		target='_blank'
+		rel='noopener noreferrer'
+	>
+		github<span class='sr-only'> (opens in new tab)</span>
+	</a>
+	<span class='opacity-40 pointer-events-none' aria-hidden='true'>//</span>
+	<button
+		id='copy-email'
+		class='link-item cursor-pointer'
+		aria-label='Copy email address'
+	>
+		loading...
+	</button>
+	<span id='copy-status' class='sr-only' aria-live='polite'></span>
 </nav>
 
 <style>
-  .link-item {
-    color: var(--color-foreground);
-    transition: color 0.2s;
-  }
+	.link-item {
+		color: var(--color-foreground);
+		transition: color 0.2s;
+	}
 
-  .links-nav:has(.link-item:hover) .link-item:not(:hover) {
-    color: var(--color-muted);
-  }
+	.links-nav:has(.link-item:hover) .link-item:not(:hover) {
+		color: var(--color-muted);
+	}
 </style>
