@@ -6,116 +6,127 @@ import Links from '@/components/Links.astro';
 import Footer from '@/components/Footer.astro';
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  wide?: boolean;
-  preloadImages?: string[];
+	title?: string;
+	description?: string;
+	image?: string;
+	wide?: boolean;
+	preloadImages?: string[];
 }
 
 const {
-  title = 'draguta.dev',
-  description = 'Software engineer based in Cluj-Napoca. Building things that matter.',
-  image = '/og-image.png',
-  wide = false,
-  preloadImages = [],
+	title = 'draguta.dev',
+	description = 'Software engineer based in Cluj-Napoca. Building things that matter.',
+	image = '/og-image.png',
+	wide = false,
+	preloadImages = [],
 } = Astro.props;
 
 const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || 'https://draguta.dev'
+	Astro.url.pathname,
+	Astro.site || 'https://draguta.dev'
 );
 const fullTitle = title === 'draguta.dev' ? title : `${title} | draguta.dev`;
 ---
 
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
 
-    <!-- SEO -->
-    <title>{fullTitle}</title>
-    <meta name='description' content={description} />
-    <link rel='canonical' href={canonicalURL} />
+		<!-- SEO -->
+		<title>{fullTitle}</title>
+		<meta name='description' content={description} />
+		<link rel='canonical' href={canonicalURL} />
 
-    <!-- Open Graph -->
-    <meta property='og:type' content='website' />
-    <meta property='og:url' content={canonicalURL} />
-    <meta property='og:title' content={fullTitle} />
-    <meta property='og:description' content={description} />
-    <meta property='og:image' content={image} />
+		<!-- Open Graph -->
+		<meta property='og:type' content='website' />
+		<meta property='og:url' content={canonicalURL} />
+		<meta property='og:title' content={fullTitle} />
+		<meta property='og:description' content={description} />
+		<meta property='og:image' content={image} />
 
-    <!-- Twitter -->
-    <meta name='twitter:card' content='summary_large_image' />
-    <meta name='twitter:site' content='@vasiledraguta' />
-    <meta name='twitter:title' content={fullTitle} />
-    <meta name='twitter:description' content={description} />
-    <meta name='twitter:image' content={image} />
+		<!-- Twitter -->
+		<meta name='twitter:card' content='summary_large_image' />
+		<meta name='twitter:site' content='@vasiledraguta' />
+		<meta name='twitter:title' content={fullTitle} />
+		<meta name='twitter:description' content={description} />
+		<meta name='twitter:image' content={image} />
 
-    <link rel='icon' type='image/png' href='/favicon.png' />
+		<!-- Favicons -->
+		<link rel='icon' type='image/x-icon' href='/favicon.ico' />
+		<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
+		<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+		<link
+			rel='icon'
+			type='image/png'
+			sizes='192x192'
+			href='/favicon-192x192.png'
+		/>
+		<link rel='shortcut icon' href='/favicon.ico' />
+		<link rel='apple-touch-icon' sizes='180x180' href='/favicon-192x192.png' />
 
-    {preloadImages.map((src) => <link rel='preload' as='image' href={src} />)}
+		{preloadImages.map((src) => <link rel='preload' as='image' href={src} />)}
 
-    <link
-      rel='preload'
-      href='https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2'
-      as='font'
-      type='font/woff2'
-      crossorigin
-    />
+		<link
+			rel='preload'
+			href='https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2'
+			as='font'
+			type='font/woff2'
+			crossorigin
+		/>
 
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'
-      rel='stylesheet'
-    />
-    <ClientRouter />
-    <script is:inline>
-      (function () {
-        function applyTheme() {
-          const theme =
-            localStorage.getItem('theme') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light');
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        }
+		<link rel='preconnect' href='https://fonts.googleapis.com' />
+		<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+		<link
+			href='https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'
+			rel='stylesheet'
+		/>
+		<ClientRouter />
+		<script is:inline>
+			(function () {
+				function applyTheme() {
+					const theme =
+						localStorage.getItem('theme') ||
+						(window.matchMedia('(prefers-color-scheme: dark)').matches
+							? 'dark'
+							: 'light');
+					if (theme === 'dark') {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+				}
 
-        applyTheme();
+				applyTheme();
 
-        document.addEventListener('astro:after-swap', applyTheme);
-      })();
-    </script>
-  </head>
-  <body>
-    <a href='#main-content' class='skip-link'>Skip to content</a>
-    <VideoBackground />
-    <div id='site-content' class='transition-opacity duration-500'>
-      <main
-        id='main-content'
-        class:list={[
-          'relative z-10 flex flex-col min-h-screen mx-auto px-8',
-          wide ? 'max-w-6xl' : 'max-w-4xl',
-        ]}
-      >
-        <nav class='py-6' aria-label='Social links'>
-          <Links />
-        </nav>
-        <slot />
-        <Footer />
-      </main>
-    </div>
-    <script>
-      import { initVideo } from '@/lib/video';
-      import { initKeyboardShortcuts } from '@/lib/keyboard';
+				document.addEventListener('astro:after-swap', applyTheme);
+			})();
+		</script>
+	</head>
+	<body>
+		<a href='#main-content' class='skip-link'>Skip to content</a>
+		<VideoBackground />
+		<div id='site-content' class='transition-opacity duration-500'>
+			<main
+				id='main-content'
+				class:list={[
+					'relative z-10 flex flex-col min-h-screen mx-auto px-8',
+					wide ? 'max-w-6xl' : 'max-w-4xl',
+				]}
+			>
+				<nav class='py-6' aria-label='Social links'>
+					<Links />
+				</nav>
+				<slot />
+				<Footer />
+			</main>
+		</div>
+		<script>
+			import { initVideo } from '@/lib/video';
+			import { initKeyboardShortcuts } from '@/lib/keyboard';
 
-      initVideo();
-      initKeyboardShortcuts();
-    </script>
-  </body>
+			initVideo();
+			initKeyboardShortcuts();
+		</script>
+	</body>
 </html>
