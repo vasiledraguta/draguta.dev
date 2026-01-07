@@ -1,32 +1,32 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { credits } from '@/data/credits';
-import { LinkIcon } from '@phosphor-icons/react';
+import Layout from "@/layouts/Layout.astro";
+import { credits } from "@/data/credits";
+import { LinkIcon } from "@phosphor-icons/react";
 ---
 
-<Layout title='credits' description='developers and sites that inspired me'>
-  <section class='pt-16'>
-    <h1 class='text-3xl font-medium mb-2 font-display'>credits</h1>
-    <p class='text-muted text-sm mb-12'>
+<Layout title="credits" description="developers and sites that inspired me">
+  <section class="pt-16">
+    <h1 class="text-3xl font-medium mb-2 font-display">credits</h1>
+    <p class="text-muted text-sm mb-12">
       developers and sites that inspired me.
     </p>
 
-    <ul class='space-y-3'>
+    <ul class="space-y-3">
       {
         credits.map((credit) => (
           <li>
             <a
               href={credit.url}
-              target='_blank'
-              rel='noopener noreferrer'
-              class='text-foreground hover:text-accent-hover transition-colors'
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-foreground hover:text-accent-hover transition-colors"
             >
               {credit.name}
               <LinkIcon
-                className='inline w-3.5 h-3.5 ml-1 opacity-40'
-                aria-hidden='true'
+                className="inline w-3.5 h-3.5 ml-1 opacity-40"
+                aria-hidden="true"
               />
-              <span class='sr-only'>(opens in new tab)</span>
+              <span class="sr-only">(opens in new tab)</span>
             </a>
           </li>
         ))
@@ -34,8 +34,8 @@ import { LinkIcon } from '@phosphor-icons/react';
     </ul>
 
     <a
-      href='/'
-      class='text-muted block mt-16 underline hover:text-foreground transition-colors'
+      href="/"
+      class="text-muted block mt-16 underline hover:text-foreground transition-colors"
       >back to home</a
     >
   </section>

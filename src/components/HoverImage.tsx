@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 interface HoverImageProps {
   text: string;
@@ -11,16 +11,16 @@ interface HoverImageProps {
 const HoverImage = ({
   text,
   imageSrc,
-  imageAlt = '',
-  className = '',
+  imageAlt = "",
+  className = "",
 }: HoverImageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLSpanElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const hasHover =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(hover: hover)').matches;
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: hover)").matches;
 
   const handleMouseEnter = useCallback(() => {
     if (hasHover) setIsOpen(true);
@@ -40,11 +40,11 @@ const HoverImage = ({
         const closeOnOutsideTouch = (event: TouchEvent) => {
           if (!containerRef.current?.contains(event.target as Node)) {
             setIsOpen(false);
-            document.removeEventListener('touchstart', closeOnOutsideTouch);
+            document.removeEventListener("touchstart", closeOnOutsideTouch);
           }
         };
         setTimeout(() => {
-          document.addEventListener('touchstart', closeOnOutsideTouch);
+          document.addEventListener("touchstart", closeOnOutsideTouch);
         }, 50);
       }
     },
@@ -55,7 +55,7 @@ const HoverImage = ({
     <span
       ref={containerRef}
       className={`relative inline-block cursor-default overflow-visible ${className}`}
-      style={{ overflow: 'visible' }}
+      style={{ overflow: "visible" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchEnd={handleTouchEnd}
@@ -64,8 +64,8 @@ const HoverImage = ({
       <AnimatePresence>
         {isOpen && (
           <span
-            className='absolute bottom-full left-1/2 flex flex-col items-center'
-            style={{ transform: 'translateX(-50%)' }}
+            className="absolute bottom-full left-1/2 flex flex-col items-center"
+            style={{ transform: "translateX(-50%)" }}
           >
             <motion.div
               initial={
@@ -73,7 +73,7 @@ const HoverImage = ({
                   ? false
                   : {
                       opacity: 0,
-                      filter: 'blur(8px)',
+                      filter: "blur(8px)",
                       rotate: -8,
                       scale: 0.9,
                       y: 10,
@@ -81,14 +81,14 @@ const HoverImage = ({
               }
               animate={{
                 opacity: 1,
-                filter: 'blur(0px)',
+                filter: "blur(0px)",
                 rotate: prefersReducedMotion ? 0 : 3,
                 scale: 1,
                 y: 0,
                 transition: prefersReducedMotion
                   ? { duration: 0 }
                   : {
-                      type: 'spring',
+                      type: "spring",
                       stiffness: 300,
                       damping: 20,
                       duration: 0.2,
@@ -99,13 +99,13 @@ const HoverImage = ({
                   ? undefined
                   : {
                       opacity: 0,
-                      filter: 'blur(8px)',
+                      filter: "blur(8px)",
                       rotate: -8,
                       scale: 0.9,
                       y: 10,
                       transition: {
                         duration: 0.2,
-                        ease: 'easeOut',
+                        ease: "easeOut",
                       },
                     }
               }
@@ -114,21 +114,21 @@ const HoverImage = ({
                 height: 160,
                 marginBottom: 8,
                 willChange: prefersReducedMotion
-                  ? 'auto'
-                  : 'transform, opacity, filter',
+                  ? "auto"
+                  : "transform, opacity, filter",
               }}
-              className='relative rounded-xl shadow-2xl overflow-hidden bg-zinc-800'
+              className="relative rounded-xl shadow-2xl overflow-hidden bg-zinc-800"
             >
               <img
                 src={imageSrc}
                 alt={imageAlt}
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   top: 0,
                   left: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
               />
             </motion.div>

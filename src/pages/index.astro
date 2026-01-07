@@ -1,26 +1,26 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import AboutMe from '@/components/AboutMe.astro';
+import Layout from "@/layouts/Layout.astro";
+import AboutMe from "@/components/AboutMe.astro";
 
 const interestImages = [
-  '/interests/technology.jpg',
-  '/interests/memes.jpg',
-  '/interests/sports.jpg',
-  '/interests/videogames.jpg',
-  '/interests/music.jpg',
+  "/interests/technology.jpg",
+  "/interests/memes.jpg",
+  "/interests/sports.jpg",
+  "/interests/videogames.jpg",
+  "/interests/music.jpg",
 ];
 ---
 
 <Layout preloadImages={interestImages}>
-  <section class='pt-16'>
-    <h1 class='text-3xl font-medium font-display'>Vasile Draguța</h1>
-    <span class='text-muted/60 text-xs tracking-wide'
+  <section class="pt-16">
+    <h1 class="text-3xl font-medium font-display">Vasile Draguța</h1>
+    <span class="text-muted/60 text-xs tracking-wide"
       >/vah-SEE-leh drah-GOO-tsah/</span
     >
-    <p class='text-muted mt-1'>software engineer based in cluj-napoca</p>
+    <p class="text-muted mt-1">software engineer based in cluj-napoca</p>
   </section>
 
-  <section class='py-12'>
+  <section class="py-12">
     <AboutMe />
   </section>
 </Layout>

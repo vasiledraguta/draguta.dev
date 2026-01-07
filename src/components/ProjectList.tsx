@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
-import { AnimatePresence } from 'motion/react';
-import GlassIndicator from './GlassIndicator';
-import ProjectImage from './ProjectImage';
-import ProjectItem from './ProjectItem';
+import { useState, useRef } from "react";
+import { AnimatePresence } from "motion/react";
+import GlassIndicator from "./GlassIndicator";
+import ProjectImage from "./ProjectImage";
+import ProjectItem from "./ProjectItem";
 
 interface Project {
   title: string;
@@ -39,10 +39,10 @@ const ProjectList = ({ projects }: ProjectListProps) => {
   };
 
   return (
-    <div className='flex gap-16 items-stretch'>
+    <div className="flex gap-16 items-stretch">
       <ul
         ref={listRef}
-        className='relative flex-1 max-w-md space-y-1'
+        className="relative flex-1 max-w-md space-y-1"
         onMouseLeave={() => setHoveredIndex(null)}
       >
         <AnimatePresence>
@@ -62,8 +62,8 @@ const ProjectList = ({ projects }: ProjectListProps) => {
         ))}
       </ul>
 
-      <div className='hidden sm:flex flex-1 items-center justify-center'>
-        <AnimatePresence mode='wait'>
+      <div className="hidden sm:flex flex-1 items-center justify-center">
+        <AnimatePresence mode="wait">
           {currentProject?.image && (
             <ProjectImage
               key={currentProject.title}

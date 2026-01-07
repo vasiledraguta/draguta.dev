@@ -11,46 +11,46 @@ export interface SetupCategory {
 
 export const setup: SetupCategory[] = [
   {
-    title: 'hardware',
+    title: "hardware",
     items: [
       {
         name: 'macbook pro 16" m3 pro',
-        description: 'my main machine for development.',
+        description: "my main machine for development.",
       },
     ],
   },
   {
-    title: 'development',
+    title: "development",
     items: [
       {
-        name: 'cursor',
-        description: 'ai-powered ide.',
-        link: 'https://cursor.com',
+        name: "cursor",
+        description: "ai-powered ide.",
+        link: "https://cursor.com",
       },
       {
-        name: 'ghostty',
-        description: 'fast, native terminal emulator.',
-        link: 'https://ghostty.org',
+        name: "ghostty",
+        description: "fast, native terminal emulator.",
+        link: "https://ghostty.org",
       },
       {
-        name: 'fish',
-        description: 'user friendly shell with great defaults.',
-        link: 'https://fishshell.com',
+        name: "fish",
+        description: "user friendly shell with great defaults.",
+        link: "https://fishshell.com",
       },
     ],
   },
   {
-    title: 'apps',
+    title: "apps",
     items: [
       {
-        name: 'helium',
-        description: 'my browser of choice.',
-        link: 'https://helium.computer/',
+        name: "helium",
+        description: "my browser of choice.",
+        link: "https://helium.computer/",
       },
       {
-        name: 'spotify',
-        description: 'music.',
-        link: 'https://spotify.com',
+        name: "spotify",
+        description: "music.",
+        link: "https://spotify.com",
       },
     ],
   },

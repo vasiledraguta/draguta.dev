@@ -5,19 +5,19 @@ export interface Credit {
 
 export const credits: Credit[] = [
   {
-    name: 'Cristian Crețu',
-    url: 'https://cretu.dev',
+    name: "Cristian Crețu",
+    url: "https://cretu.dev",
   },
   {
-    name: 'Gavin Nelson',
-    url: 'https://nelson.co',
+    name: "Gavin Nelson",
+    url: "https://nelson.co",
   },
   {
-    name: 'Ruru',
-    url: 'https://www.ruru.build',
+    name: "Ruru",
+    url: "https://www.ruru.build",
   },
   {
-    name: 'Emil Kowalski',
-    url: 'https://emilkowal.ski/',
+    name: "Emil Kowalski",
+    url: "https://emilkowal.ski/",
   },
 ];

@@ -1,46 +1,46 @@
 ---
-import HoverImage from './HoverImage';
+import HoverImage from "./HoverImage";
 
 const interests = [
-  { text: 'technology', image: '/interests/technology.jpg' },
-  { text: 'memes', image: '/interests/memes.jpg' },
-  { text: 'sports', image: '/interests/sports.jpg' },
-  { text: 'video games', image: '/interests/videogames.jpg' },
-  { text: 'music', image: '/interests/music.jpg' },
+  { text: "technology", image: "/interests/technology.jpg" },
+  { text: "memes", image: "/interests/memes.jpg" },
+  { text: "sports", image: "/interests/sports.jpg" },
+  { text: "video games", image: "/interests/videogames.jpg" },
+  { text: "music", image: "/interests/music.jpg" },
 ];
 ---
 
-<section class='max-w-4xl space-y-6'>
-  <p class='leading-relaxed'>
+<section class="max-w-4xl space-y-6">
+  <p class="leading-relaxed">
     i'm a software engineer currently in my third year studying computer science
     at bbu. i'm looking for opportunities to work with people who care about
     building things that matter.
   </p>
 
-  <p class='leading-relaxed'>
+  <p class="leading-relaxed">
     the <a
-      href='/setup'
-      class='text-foreground underline hover:text-accent-hover transition-colors'
+      href="/setup/"
+      class="text-foreground underline hover:text-accent-hover transition-colors"
       >tools</a
     > i reach for most of the time are react, tailwindcss, motion, and typescript.
     i <a
-      href='/projects'
-      class='text-foreground underline hover:text-accent-hover transition-colors'
+      href="/projects/"
+      class="text-foreground underline hover:text-accent-hover transition-colors"
       >build things</a
     > that cure my own icks—smoothing out the rough edges i bump into in everyday
     apps.
   </p>
 
-  <p class='leading-relaxed'>
+  <p class="leading-relaxed">
     started programming because i wanted to take things apart and see how they
     actually work. it wasn't just about the syntax; it was about the way things
     fit together. that drive to understand the 'why' is still what keeps me
     building today.
   </p>
 
-  <p class='leading-relaxed text-muted'>
-    i like{' '}<span
-      class='inline sm:inline-flex sm:flex-wrap sm:items-baseline'
+  <p class="leading-relaxed text-muted">
+    i like{" "}<span
+      class="inline sm:inline-flex sm:flex-wrap sm:items-baseline"
       >{
         interests.map((item, index) => (
           <>
@@ -50,22 +50,22 @@ const interests = [
               imageSrc={item.image}
               imageAlt={item.text}
             />
-            <span class='hidden sm:inline'>
+            <span class="hidden sm:inline">
               {index < interests.length - 2
-                ? ','
+                ? ","
                 : index === interests.length - 2
-                  ? ', and'
-                  : '.'}
+                  ? ", and"
+                  : "."}
             </span>
-            <span class='sm:hidden -ml-1'>
+            <span class="sm:hidden -ml-1">
               {index < interests.length - 2
-                ? ', '
+                ? ", "
                 : index === interests.length - 2
-                  ? ', and '
-                  : '.'}
+                  ? ", and "
+                  : "."}
             </span>
             {index < interests.length - 1 && (
-              <span class='hidden sm:inline'>&nbsp;</span>
+              <span class="hidden sm:inline">&nbsp;</span>
             )}
           </>
         ))

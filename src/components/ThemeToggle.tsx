@@ -1,85 +1,85 @@
-import * as React from 'react';
-import { MoonIcon, SunIcon } from '@phosphor-icons/react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import * as React from "react";
+import { MoonIcon, SunIcon } from "@phosphor-icons/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
   const prefersReducedMotion = useReducedMotion();
 
   React.useEffect(() => {
-    const getThemePreference = (): 'light' | 'dark' => {
+    const getThemePreference = (): "light" | "dark" => {
       if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('theme')
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
       ) {
-        return localStorage.getItem('theme') as 'light' | 'dark';
+        return localStorage.getItem("theme") as "light" | "dark";
       }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     };
     setTheme(getThemePreference());
 
-    const handleThemeToggle = (e: CustomEvent<{ theme: 'light' | 'dark' }>) => {
+    const handleThemeToggle = (e: CustomEvent<{ theme: "light" | "dark" }>) => {
       setTheme(e.detail.theme);
     };
-    window.addEventListener('theme-toggle', handleThemeToggle as EventListener);
+    window.addEventListener("theme-toggle", handleThemeToggle as EventListener);
     return () => {
       window.removeEventListener(
-        'theme-toggle',
+        "theme-toggle",
         handleThemeToggle as EventListener
       );
     };
   }, []);
 
   React.useEffect(() => {
-    const isDark = theme === 'dark';
-    document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('theme', theme);
+    const isDark = theme === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("theme", theme);
     }
   }, [theme]);
 
   const toggleTheme = () => {
-    const audio = new Audio('/light-switch.mp3');
+    const audio = new Audio("/light-switch.mp3");
     audio.volume = 0.5;
     audio.play();
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
     <button
       onClick={toggleTheme}
       aria-label={
-        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+        theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
       }
-      className='relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden cursor-pointer'
+      className="relative flex items-center justify-center size-10 rounded-full bg-button-bg backdrop-blur-sm border border-border hover:bg-button-hover transition-colors text-foreground active:scale-95 overflow-hidden cursor-pointer"
     >
-      <AnimatePresence mode='wait' initial={false}>
+      <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={theme}
           initial={
             prefersReducedMotion
               ? false
-              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+              : { opacity: 0.8, scale: 0.8, filter: "blur(4px)" }
           }
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           exit={
             prefersReducedMotion
               ? undefined
-              : { opacity: 0.8, scale: 0.8, filter: 'blur(4px)' }
+              : { opacity: 0.8, scale: 0.8, filter: "blur(4px)" }
           }
           transition={
             prefersReducedMotion
               ? { duration: 0 }
-              : { duration: 0.1, ease: 'easeOut' }
+              : { duration: 0.1, ease: "easeOut" }
           }
-          className='flex items-center justify-center'
+          className="flex items-center justify-center"
         >
-          {theme === 'dark' ? (
-            <SunIcon aria-hidden='true' />
+          {theme === "dark" ? (
+            <SunIcon aria-hidden="true" />
           ) : (
-            <MoonIcon aria-hidden='true' />
+            <MoonIcon aria-hidden="true" />
           )}
         </motion.span>
       </AnimatePresence>

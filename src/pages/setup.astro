@@ -1,45 +1,45 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { setup } from '@/data/setup';
-import { LinkIcon } from '@phosphor-icons/react';
+import Layout from "@/layouts/Layout.astro";
+import { setup } from "@/data/setup";
+import { LinkIcon } from "@phosphor-icons/react";
 ---
 
-<Layout title='setup' description='hardware and software i use daily'>
-  <section class='pt-16'>
-    <h1 class='text-3xl font-medium mb-2 font-display'>setup</h1>
-    <p class='text-muted text-sm mb-12'>hardware and software i use daily.</p>
+<Layout title="setup" description="hardware and software i use daily">
+  <section class="pt-16">
+    <h1 class="text-3xl font-medium mb-2 font-display">setup</h1>
+    <p class="text-muted text-sm mb-12">hardware and software i use daily.</p>
 
-    <div class='space-y-10'>
+    <div class="space-y-10">
       {
         setup.map((category) => (
           <div>
-            <h2 class='text-xs font-medium mb-4 text-muted/70 uppercase tracking-widest'>
+            <h2 class="text-xs font-medium mb-4 text-muted/70 uppercase tracking-widest">
               {category.title}
             </h2>
-            <ul class='space-y-3'>
+            <ul class="space-y-3">
               {category.items.map((item) => (
-                <li class='flex items-baseline justify-between gap-4'>
+                <li class="flex items-baseline justify-between gap-4">
                   <div>
                     {item.link ? (
                       <a
                         href={item.link}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        class='text-foreground hover:text-accent-hover transition-colors'
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-foreground hover:text-accent-hover transition-colors"
                       >
                         {item.name}
                         <LinkIcon
-                          className='inline w-3.5 h-3.5 ml-1 opacity-40'
-                          aria-hidden='true'
+                          className="inline w-3.5 h-3.5 ml-1 opacity-40"
+                          aria-hidden="true"
                         />
-                        <span class='sr-only'>(opens in new tab)</span>
+                        <span class="sr-only">(opens in new tab)</span>
                       </a>
                     ) : (
-                      <span class='text-foreground'>{item.name}</span>
+                      <span class="text-foreground">{item.name}</span>
                     )}
                   </div>
                   {item.description && (
-                    <span class='text-muted text-sm'>{item.description}</span>
+                    <span class="text-muted text-sm">{item.description}</span>
                   )}
                 </li>
               ))}
@@ -50,8 +50,8 @@ import { LinkIcon } from '@phosphor-icons/react';
     </div>
 
     <a
-      href='/'
-      class='text-muted block mt-16 underline hover:text-foreground transition-colors'
+      href="/"
+      class="text-muted block mt-16 underline hover:text-foreground transition-colors"
       >back to home</a
     >
   </section>
