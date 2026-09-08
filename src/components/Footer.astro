@@ -7,6 +7,22 @@ const currentYear = new Date().getFullYear();
 <footer
   class="py-8 mt-auto flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
 >
-  <p class="text-muted text-sm font-mono">© {currentYear} draguta</p>
+  <div class="flex flex-wrap items-center gap-3 text-muted">
+    <p class="font-mono">© {currentYear} draguta</p>
+    <span class="opacity-40 pointer-events-none" aria-hidden="true">·</span>
+    <a
+      href="/credits/"
+      class="text-foreground underline hover:text-muted transition-colors"
+      >credits</a
+    >
+    <span class="opacity-40 pointer-events-none" aria-hidden="true">·</span>
+    <a
+      href="https://github.com/vasiledraguta/draguta.dev"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-foreground underline hover:text-muted transition-colors"
+      >source<span class="sr-only"> (opens in new tab)</span></a
+    >
+  </div>
   <KeyShortcuts client:load />
 </footer>
