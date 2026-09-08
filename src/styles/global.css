@@ -43,7 +43,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 #bg-video {
   opacity: 0.45;
   filter: contrast(0.85) brightness(1.02);
