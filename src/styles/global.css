@@ -3,10 +3,33 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Fonts */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Charm", cursive;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: ui-serif, Charter, "Iowan Old Style", Georgia, serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: initial;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.6;
+  --text-lg: initial;
+  --text-xl: initial;
+  --text-2xl: initial;
+  --text-3xl: initial;
+
+  --tracking-normal: -0.006em;
+
+  --spacing-block: 1.75rem;
+  --spacing-section: 4rem;
+
+  --tap-x: 0.5rem;
+  --tap-y: 0.25rem;
+
+  --measure: 34rem;
 
   --color-background: #e0e0dd;
   --color-foreground: #0a0a0a;
@@ -14,12 +37,10 @@
   --color-border: rgba(0, 0, 0, 0.14);
   --color-button-bg: rgba(0, 0, 0, 0.12);
   --color-button-hover: rgba(0, 0, 0, 0.22);
-  --color-accent: #f59e0b;
-  --color-accent-hover: #d97706;
+  --color-accent: #92400e;
 }
 
 .dark {
-  /* Colors - Dark mode defaults */
   --color-background: #0a0a0a;
   --color-foreground: #fafafa;
   --color-muted: #a3a3a3;
@@ -27,11 +48,18 @@
   --color-button-bg: rgba(255, 255, 255, 0.1);
   --color-button-hover: rgba(255, 255, 255, 0.2);
   --color-accent: #fbbf24;
-  --color-accent-hover: #f59e0b;
 }
 
 body {
   font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  letter-spacing: var(--tracking-normal);
+  font-optical-sizing: auto;
+  font-feature-settings:
+    "cv05" 1,
+    "ss03" 1;
+  text-rendering: optimizeLegibility;
   background-color: var(--color-background);
   color: var(--color-foreground);
   transition:
@@ -41,6 +69,57 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--text-base--line-height);
+    letter-spacing: var(--tracking-normal);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  em,
+  i,
+  cite {
+    font-family: var(--font-serif);
+    font-style: italic;
+    letter-spacing: normal;
+  }
+
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  a:not(.skip-link) {
+    padding: var(--tap-y) var(--tap-x);
+    margin: calc(-1 * var(--tap-y)) calc(-1 * var(--tap-x));
+  }
+}
+
+@utility measure {
+  max-width: var(--measure);
+}
+
+@utility tap {
+  padding: var(--tap-y) var(--tap-x);
+  margin: calc(-1 * var(--tap-y)) calc(-1 * var(--tap-x));
 }
 
 #bg-video {
