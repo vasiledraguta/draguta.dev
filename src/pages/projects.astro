@@ -14,17 +14,17 @@ const projectImages = projects
   wide
   preloadImages={projectImages}
 >
-  <section class="pt-16 flex-1 flex flex-col">
-    <h1 class="text-3xl font-medium mb-2 font-display">projects</h1>
-    <p class="text-muted text-sm mb-8">things i've built and worked on.</p>
-
-    <div class="flex-1 min-h-0">
-      <ProjectList client:load projects={projects} />
+  <section class="pt-16">
+    <div class="space-y-2 mb-block">
+      <h1>projects</h1>
+      <p class="text-muted">things i've built and worked on.</p>
     </div>
+
+    <ProjectList client:load projects={projects} />
 
     <a
       href="/"
-      class="text-muted block mt-8 underline hover:text-foreground transition-colors"
+      class="text-foreground inline-block whitespace-nowrap mt-block underline hover:text-muted transition-colors"
       >back to home</a
     >
   </section>
