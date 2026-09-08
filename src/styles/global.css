@@ -34,9 +34,6 @@
   --color-background: #e0e0dd;
   --color-foreground: #0a0a0a;
   --color-muted: #484843;
-  --color-border: rgba(0, 0, 0, 0.14);
-  --color-button-bg: rgba(0, 0, 0, 0.12);
-  --color-button-hover: rgba(0, 0, 0, 0.22);
   --color-accent: #92400e;
 }
 
@@ -44,9 +41,6 @@
   --color-background: #0a0a0a;
   --color-foreground: #fafafa;
   --color-muted: #a3a3a3;
-  --color-border: rgba(255, 255, 255, 0.2);
-  --color-button-bg: rgba(255, 255, 255, 0.1);
-  --color-button-hover: rgba(255, 255, 255, 0.2);
   --color-accent: #fbbf24;
 }
 
