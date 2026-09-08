@@ -19,12 +19,12 @@ const ProjectItem = ({ project, onMouseEnter, ref }: ProjectItemProps) => (
       href={project.url || "#"}
       target="_blank"
       rel="noopener noreferrer"
-      className="relative block pl-4 py-3 pr-4"
+      className="relative block m-0 pl-4 py-2 pr-4"
     >
-      <h3 className="font-medium text-foreground group-hover:text-accent-hover transition-colors">
+      <h3 className="font-normal text-foreground group-hover:text-muted transition-colors">
         {project.title}
       </h3>
-      <p className="text-muted text-sm mt-1">{project.description}</p>
+      <p className="text-muted mt-1">{project.description}</p>
       <span className="sr-only">(opens in new tab)</span>
     </a>
   </li>

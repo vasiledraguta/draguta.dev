@@ -74,9 +74,9 @@
   document.addEventListener("astro:page-load", initCopyEmail);
 </script>
 
-<nav class="links-nav flex flex-row items-center gap-3 text-sm">
+<nav class="links-nav flex flex-row items-center gap-3">
   <a
-    class="link-item px-2 py-1 -mx-2 -my-1"
+    class="link-item"
     href="https://x.com/vasiledraguta"
     target="_blank"
     rel="noopener noreferrer"
@@ -85,7 +85,7 @@
   </a>
   <span class="opacity-40 pointer-events-none" aria-hidden="true">//</span>
   <a
-    class="link-item px-2 py-1 -mx-2 -my-1"
+    class="link-item"
     href="https://github.com/vasiledraguta"
     target="_blank"
     rel="noopener noreferrer"
@@ -95,7 +95,7 @@
   <span class="opacity-40 pointer-events-none" aria-hidden="true">//</span>
   <button
     id="copy-email"
-    class="link-item px-2 py-1 -mx-2 -my-1 cursor-pointer"
+    class="link-item tap cursor-pointer"
     aria-label="Copy email address"
   >
     loading...
@@ -106,10 +106,10 @@
 <style>
   .link-item {
     color: var(--color-foreground);
-    transition: color 0.2s;
+    transition: color 0.15s;
   }
 
-  .links-nav:has(.link-item:hover) .link-item:not(:hover) {
+  .link-item:hover {
     color: var(--color-muted);
   }
 </style>

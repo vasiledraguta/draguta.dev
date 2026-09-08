@@ -7,17 +7,17 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
 
 <Layout title="setup" description="hardware and software i use daily">
   <section class="pt-16">
-    <h1 class="text-3xl font-medium mb-2 font-display">setup</h1>
-    <p class="text-muted text-sm mb-12">hardware and software i use daily.</p>
+    <div class="space-y-2 mb-block">
+      <h1>setup</h1>
+      <p class="text-muted">hardware and software i use daily.</p>
+    </div>
 
-    <div class="space-y-10">
+    <div class="space-y-block">
       {
         setup.map((category) => (
           <div>
-            <h2 class="text-xs font-medium mb-4 text-muted/70 uppercase tracking-widest">
-              {category.title}
-            </h2>
-            <ul class="space-y-3">
+            <h2 class="mb-3">{category.title}</h2>
+            <ul class="space-y-2">
               {category.items.map((item) => (
                 <li class="flex items-baseline justify-between gap-4">
                   <div>
@@ -26,7 +26,7 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="text-foreground hover:text-accent-hover transition-colors"
+                        class="text-foreground underline hover:text-muted transition-colors"
                       >
                         {item.name}
                         <Fragment set:html={linkIcon} />
@@ -37,7 +37,7 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
                     )}
                   </div>
                   {item.description && (
-                    <span class="text-muted text-sm">{item.description}</span>
+                    <span class="text-muted">{item.description}</span>
                   )}
                 </li>
               ))}
@@ -49,7 +49,7 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
 
     <a
       href="/"
-      class="text-muted block mt-16 underline hover:text-foreground transition-colors"
+      class="text-foreground inline-block whitespace-nowrap mt-block underline hover:text-muted transition-colors"
       >back to home</a
     >
   </section>

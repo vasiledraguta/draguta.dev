@@ -28,20 +28,18 @@ const KeyShortcuts = () => {
   }, []);
 
   return (
-    <ul className="flex flex-col gap-1 text-sm text-muted">
+    <ul className="flex flex-col gap-1 text-muted">
       {shortcuts.map((s) => (
         <li key={s.key}>
           <button
             type="button"
             onClick={s.run}
-            className="group flex items-baseline gap-2.5 hover:text-foreground transition-colors cursor-pointer"
+            className="group inline-flex items-baseline gap-2.5 hover:text-foreground transition-colors cursor-pointer tap"
           >
-            <kbd className="font-mono text-xs text-foreground/60 group-hover:text-foreground transition-colors">
+            <kbd className="font-mono text-xs text-muted group-hover:text-foreground transition-colors">
               {s.key}
             </kbd>
-            <span className="inline-block min-w-16 text-left">
-              {state[s.key] ?? s.label}
-            </span>
+            <span>{state[s.key] ?? s.label}</span>
           </button>
         </li>
       ))}

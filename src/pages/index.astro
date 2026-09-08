@@ -4,15 +4,13 @@ import AboutMe from "@/components/AboutMe.astro";
 ---
 
 <Layout>
-  <section class="pt-16">
-    <h1 class="text-3xl font-medium font-display">Vasile Draguța</h1>
-    <span class="text-muted/60 text-xs tracking-wide"
-      >/vah-SEE-leh drah-GOO-tsah/</span
-    >
-    <p class="text-muted mt-1">software engineer based in cluj-napoca</p>
-  </section>
+  <div class="pt-16 space-y-section">
+    <section class="space-y-2">
+      <h1>Vasile Draguța</h1>
+      <p class="text-muted">/vah-SEE-leh drah-GOO-tsah/</p>
+      <p class="text-muted">software engineer based in cluj-napoca</p>
+    </section>
 
-  <section class="py-12">
     <AboutMe />
-  </section>
+  </div>
 </Layout>
