@@ -31,17 +31,15 @@
 
   --measure: 34rem;
 
-  --color-background: #e0e0dd;
-  --color-foreground: #0a0a0a;
-  --color-muted: #484843;
-  --color-accent: #92400e;
+  --color-background: #f2f0e8;
+  --color-foreground: #0f0e08;
+  --color-muted: #3a3932;
 }
 
 .dark {
   --color-background: #0a0a0a;
   --color-foreground: #fafafa;
   --color-muted: #a3a3a3;
-  --color-accent: #fbbf24;
 }
 
 body {
@@ -97,10 +95,22 @@ body {
   }
 
   a {
+    color: var(--color-muted);
+    text-decoration-line: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
     padding: var(--tap-y) var(--tap-x);
     margin: calc(-1 * var(--tap-y)) calc(-1 * var(--tap-x));
+  }
+
+  a,
+  button {
+    transition: color 0.15s ease;
+  }
+
+  a:hover,
+  button:hover {
+    color: var(--color-foreground);
   }
 }
 
@@ -114,25 +124,13 @@ body {
 }
 
 #bg-video {
-  opacity: 0.45;
-  filter: contrast(0.85) brightness(1.02);
-}
-
-#video-scrim {
-  background-color: color-mix(
-    in oklab,
-    var(--color-background) 8%,
-    transparent
-  );
+  opacity: 0.38;
+  filter: contrast(0.85) saturate(1.2);
 }
 
 .dark #bg-video {
   opacity: 0.3;
   filter: none;
-}
-
-.dark #video-scrim {
-  background-color: transparent;
 }
 
 body.zen #site-content {
@@ -145,18 +143,14 @@ body.zen #bg-video {
   filter: none;
 }
 
-body.zen #video-scrim {
-  background-color: transparent;
-}
-
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-foreground);
   outline-offset: 2px;
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-foreground);
   outline-offset: 2px;
   border-radius: 4px;
 }

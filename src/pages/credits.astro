@@ -16,12 +16,7 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
       {
         credits.map((credit) => (
           <li>
-            <a
-              href={credit.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-foreground underline hover:text-muted transition-colors"
-            >
+            <a href={credit.url} target="_blank" rel="noopener noreferrer">
               {credit.name}
               <Fragment set:html={linkIcon} />
               <span class="sr-only">(opens in new tab)</span>
@@ -31,10 +26,6 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
       }
     </ul>
 
-    <a
-      href="/"
-      class="text-foreground inline-block whitespace-nowrap mt-block underline hover:text-muted transition-colors"
-      >back to home</a
-    >
+    <a href="/" class="inline-block whitespace-nowrap mt-block">back to home</a>
   </section>
 </Layout>
