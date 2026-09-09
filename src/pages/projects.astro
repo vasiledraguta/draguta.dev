@@ -1,31 +1,35 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import ProjectList from "@/components/ProjectList";
 import { projects } from "@/data/projects";
-
-const projectImages = projects
-  .map((p) => p.image)
-  .filter((image): image is string => typeof image === "string");
 ---
 
-<Layout
-  title="projects"
-  description="things I have built"
-  wide
-  preloadImages={projectImages}
->
+<Layout title="projects" description="things I have built">
   <section class="pt-16">
     <div class="space-y-2 mb-block">
       <h1>projects</h1>
       <p class="text-muted">things i've built and worked on.</p>
     </div>
 
-    <ProjectList client:load projects={projects} />
+    <ul class="space-y-block">
+      {
+        projects.map((project) => (
+          <li class="space-y-1">
+            {project.url ? (
+              <h2>
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  {project.title}
+                  <span class="sr-only">(opens in new tab)</span>
+                </a>
+              </h2>
+            ) : (
+              <h2>{project.title}</h2>
+            )}
+            <p class="text-muted">{project.description}</p>
+          </li>
+        ))
+      }
+    </ul>
 
-    <a
-      href="/"
-      class="text-foreground inline-block whitespace-nowrap mt-block underline hover:text-muted transition-colors"
-      >back to home</a
-    >
+    <a href="/" class="inline-block whitespace-nowrap mt-block">back to home</a>
   </section>
 </Layout>
