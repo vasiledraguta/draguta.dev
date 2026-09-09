@@ -5,12 +5,12 @@ import { projects } from "@/data/projects";
 
 <Layout title="projects" description="things I have built">
   <section class="pt-16">
-    <div class="space-y-2 mb-block">
+    <div class="space-y-2 mb-stack">
       <h1>projects</h1>
       <p class="text-muted">things i've built and worked on.</p>
     </div>
 
-    <ul class="space-y-block">
+    <ul class="space-y-stack">
       {
         projects.map((project) => (
           <li class="space-y-1">
@@ -30,6 +30,6 @@ import { projects } from "@/data/projects";
       }
     </ul>
 
-    <a href="/" class="inline-block whitespace-nowrap mt-block">back to home</a>
+    <a href="/" class="inline-block whitespace-nowrap mt-stack">back to home</a>
   </section>
 </Layout>
