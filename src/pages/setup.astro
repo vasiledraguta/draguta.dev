@@ -1,8 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { setup } from "@/data/setup";
-
-const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1 opacity-40"><path d="M10 14a4 4 0 0 0 5.66 0l3-3A4 4 0 0 0 13 5.34l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3A4 4 0 0 0 11 18.66l1.5-1.5"/></svg>`;
 ---
 
 <Layout title="setup" description="hardware and software i use daily">
@@ -28,7 +26,6 @@ const linkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
                         rel="noopener noreferrer"
                       >
                         {item.name}
-                        <Fragment set:html={linkIcon} />
                         <span class="sr-only">(opens in new tab)</span>
                       </a>
                     ) : (
