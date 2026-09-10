@@ -9,12 +9,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "draguta.dev",
-  description = "Software engineer based in Cluj-Napoca.",
+  description = "Currently at Garmin in Cluj-Napoca.",
   image = "/og-image.png",
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -44,11 +46,19 @@ const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
     />
 
     <!-- Robots -->
-    <meta name="robots" content="index, follow" />
-    <meta
-      name="googlebot"
-      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-    />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <Fragment>
+          <meta name="robots" content="index, follow" />
+          <meta
+            name="googlebot"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          />
+        </Fragment>
+      )
+    }
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -70,7 +80,7 @@ const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
 
     <link
       rel="preload"
-      href="https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+      href="https://fonts.gstatic.com/s/onest/v11/gNMKW3F-SZuj7xmf-HYoEoey.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -79,32 +89,47 @@ const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap"
       rel="stylesheet"
     />
     <ClientRouter />
     <script is:inline>
       (function () {
-        var query = window.matchMedia("(prefers-color-scheme: dark)");
-
         function preference() {
-          var stored = localStorage.getItem("theme");
-          return stored === "light" || stored === "dark" ? stored : "system";
+          var stored = null;
+
+          try {
+            stored = localStorage.getItem("theme");
+          } catch (e) {
+            stored = null;
+          }
+
+          if (stored === "light" || stored === "dark") return stored;
+
+          var system = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+
+          try {
+            localStorage.setItem("theme", system);
+          } catch (e) {
+            return system;
+          }
+
+          return system;
         }
 
         function applyTheme() {
-          var pref = preference();
-          var dark = pref === "dark" || (pref === "system" && query.matches);
-          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.classList.toggle(
+            "dark",
+            preference() === "dark"
+          );
         }
 
         applyTheme();
 
         if (!window.__themeInit) {
           window.__themeInit = true;
-          query.addEventListener("change", function () {
-            if (preference() === "system") applyTheme();
-          });
           document.addEventListener("astro:after-swap", applyTheme);
         }
       })();
@@ -112,16 +137,21 @@ const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
   </head>
   <body>
     <VideoBackground />
+    <p id="zen-hint">
+      <kbd class="font-mono text-xs">z</kbd> to exit
+    </p>
     <div id="site-content" class="transition-opacity duration-500">
-      <main
+      <div
         class="relative z-10 flex flex-col min-h-screen mx-auto px-8 max-w-4xl"
       >
-        <nav class="py-6" aria-label="Social links">
+        <header class="py-6">
           <Links />
-        </nav>
-        <slot />
+        </header>
+        <main>
+          <slot />
+        </main>
         <Footer />
-      </main>
+      </div>
     </div>
     <script>
       import { initVideo } from "@/lib/video";

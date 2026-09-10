@@ -149,6 +149,26 @@ body.zen #site-content {
   pointer-events: none;
 }
 
+#zen-hint {
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  color: var(--color-foreground);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+body.zen #zen-hint {
+  opacity: 1;
+  visibility: visible;
+}
+
 body.zen #bg-video {
   opacity: 1;
   filter: none;

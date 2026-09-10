@@ -3,7 +3,7 @@ import { shortcuts } from "@/lib/keyboard";
 import { getPreference } from "@/lib/theme";
 import AnimatedText from "@/components/AnimatedText";
 
-const RESTING: Record<string, string> = { p: "playing" };
+const RESTING: Record<string, string> = { p: "playing", t: "dark" };
 
 const getVideo = () =>
   document.getElementById("bg-video") as HTMLVideoElement | null;

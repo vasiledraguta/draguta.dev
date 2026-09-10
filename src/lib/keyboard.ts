@@ -1,4 +1,4 @@
-import { cyclePreference } from "@/lib/theme";
+import { togglePreference } from "@/lib/theme";
 
 export interface Shortcut {
   key: string;
@@ -14,11 +14,12 @@ function toggleVideo() {
 }
 
 function toggleZen() {
-  document.body.classList.toggle("zen");
+  const zen = document.body.classList.toggle("zen");
+  document.getElementById("site-content")?.toggleAttribute("inert", zen);
 }
 
 export const shortcuts: Shortcut[] = [
-  { key: "t", label: "theme", run: cyclePreference },
+  { key: "t", label: "theme", run: togglePreference },
   { key: "p", label: "video", run: toggleVideo },
   { key: "z", label: "zen", run: toggleZen },
 ];
