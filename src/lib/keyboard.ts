@@ -25,6 +25,8 @@ export const shortcuts: Shortcut[] = [
 
 export function initKeyboardShortcuts() {
   document.addEventListener("keydown", (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+
     const target = e.target as HTMLElement;
     if (
       target.tagName === "INPUT" ||
