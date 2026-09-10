@@ -9,8 +9,8 @@ interface AnimatedTextProps {
   ready?: boolean;
 }
 
-const EXIT: Transition = { duration: 0.13, ease: [0.32, 0, 0.67, 0] };
-const ENTER: Transition = { duration: 0.28, ease: [0.16, 1, 0.3, 1] };
+const EXIT: Transition = { duration: 0.08, ease: [0.32, 0, 0.67, 0] };
+const ENTER: Transition = { duration: 0.18, ease: [0.16, 1, 0.3, 1] };
 
 const variants: Variants = {
   initial: (travel: number) => ({
