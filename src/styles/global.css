@@ -114,6 +114,17 @@ body {
   }
 }
 
+a.link-item,
+button.link-item {
+  color: var(--color-muted);
+  text-decoration-line: none;
+}
+
+a.link-item:hover,
+button.link-item:hover {
+  color: var(--color-foreground);
+}
+
 @utility measure {
   max-width: var(--measure);
 }
