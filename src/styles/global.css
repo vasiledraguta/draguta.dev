@@ -4,7 +4,7 @@
 
 @theme {
   --font-sans:
-    "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Onest", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-serif: ui-serif, Charter, "Iowan Old Style", Georgia, serif;
   --font-mono:
@@ -14,14 +14,14 @@
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.5;
   --text-sm: initial;
-  --text-base: 0.9375rem;
-  --text-base--line-height: 1.6;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75;
   --text-lg: initial;
   --text-xl: initial;
   --text-2xl: initial;
   --text-3xl: initial;
 
-  --tracking-normal: -0.006em;
+  --tracking-normal: 0em;
 
   --spacing-stack: 1.75rem;
   --spacing-section: 4rem;
@@ -29,7 +29,7 @@
   --tap-x: 0.5rem;
   --tap-y: 0.25rem;
 
-  --measure: 34rem;
+  --measure: 40rem;
 
   --color-background: #f2f0e8;
   --color-foreground: #0f0e08;
@@ -47,10 +47,6 @@ body {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   letter-spacing: var(--tracking-normal);
-  font-optical-sizing: auto;
-  font-feature-settings:
-    "cv05" 1,
-    "ss03" 1;
   text-rendering: optimizeLegibility;
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -71,7 +67,7 @@ body {
   h5,
   h6 {
     font-size: var(--text-base);
-    font-weight: 600;
+    font-weight: 500;
     line-height: var(--text-base--line-height);
     letter-spacing: var(--tracking-normal);
     text-wrap: balance;
