@@ -15,7 +15,7 @@ export const setup: SetupCategory[] = [
     items: [
       {
         name: 'macbook pro 16" m3 pro',
-        description: "my main machine for development.",
+        description: "my main machine",
       },
     ],
   },
@@ -23,19 +23,14 @@ export const setup: SetupCategory[] = [
     title: "development",
     items: [
       {
-        name: "cursor",
-        description: "ai-powered ide.",
-        link: "https://cursor.com",
+        name: "vscode",
+        description: "ide",
+        link: "https://code.visualstudio.com",
       },
       {
         name: "ghostty",
-        description: "fast, native terminal emulator.",
+        description: "terminal",
         link: "https://ghostty.org",
-      },
-      {
-        name: "fish",
-        description: "user friendly shell with great defaults.",
-        link: "https://fishshell.com",
       },
     ],
   },
@@ -44,13 +39,18 @@ export const setup: SetupCategory[] = [
     items: [
       {
         name: "helium",
-        description: "my browser of choice.",
+        description: "browser",
         link: "https://helium.computer/",
       },
       {
         name: "spotify",
-        description: "music.",
+        description: "music",
         link: "https://spotify.com",
+      },
+      {
+        name: "hermes",
+        description: "ai agent",
+        link: "https://hermes-agent.nousresearch.com/",
       },
     ],
   },

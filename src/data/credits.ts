@@ -9,15 +9,19 @@ export const credits: Credit[] = [
     url: "https://cretu.dev",
   },
   {
-    name: "Gavin Nelson",
-    url: "https://nelson.co",
+    name: "Paco Coursey",
+    url: "https://paco.me",
+  },
+  {
+    name: "Emil Kowalski",
+    url: "https://emilkowal.ski/",
   },
   {
     name: "Ruru",
     url: "https://www.ruru.build",
   },
   {
-    name: "Emil Kowalski",
-    url: "https://emilkowal.ski/",
+    name: "Gavin Nelson",
+    url: "https://nelson.co",
   },
 ];
