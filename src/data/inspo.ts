@@ -1,9 +1,9 @@
-export interface Credit {
+export interface Inspiration {
   name: string;
   url: string;
 }
 
-export const credits: Credit[] = [
+export const inspo: Inspiration[] = [
   {
     name: "Cristian Crețu",
     url: "https://cretu.dev",

@@ -4,7 +4,7 @@ export interface Project {
   url?: string;
 }
 
-export const projects: Project[] = [
+export const made: Project[] = [
   {
     title: "mimir",
     description:

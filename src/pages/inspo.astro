@@ -1,21 +1,21 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { credits } from "@/data/credits";
+import { inspo } from "@/data/inspo";
 ---
 
-<Layout title="credits" description="developers and sites that inspired me">
+<Layout title="inspo" description="developers and sites that inspired me">
   <section class="pt-16">
     <div class="space-y-2 mb-stack">
-      <h1>credits</h1>
+      <h1>inspo</h1>
       <p class="text-muted">developers and sites that inspired me.</p>
     </div>
 
     <ul class="space-y-2">
       {
-        credits.map((credit) => (
+        inspo.map((person) => (
           <li>
-            <a href={credit.url} target="_blank" rel="noopener noreferrer">
-              {credit.name}
+            <a href={person.url} target="_blank" rel="noopener noreferrer">
+              {person.name}
               <span class="sr-only">(opens in new tab)</span>
             </a>
           </li>

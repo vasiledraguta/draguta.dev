@@ -8,8 +8,11 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://draguta.dev",
-  trailingSlash: "always",
-  integrations: [react(), sitemap()],
+  trailingSlash: "never",
+  integrations: [
+    react(),
+    sitemap({ filter: (page) => !page.includes("/preview/") }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
