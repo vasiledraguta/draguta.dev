@@ -18,9 +18,9 @@ export const made: Project[] = [
     url: "https://github.com/vasiledraguta/pygmalion",
   },
   {
-    title: "faceit finder discord bot",
+    title: "thesis",
     description:
-      "discord bot for fetching faceit player stats and match history",
-    url: "https://github.com/vasiledraguta/faceit-finder-discord-bot",
+      "natural language drone control using llms and computer vision",
+    url: "https://github.com/vasiledraguta/thesis",
   },
 ];
