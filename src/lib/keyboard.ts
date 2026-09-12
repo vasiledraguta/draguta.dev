@@ -9,7 +9,7 @@ export interface Shortcut {
 function toggleVideo() {
   const video = document.getElementById("bg-video") as HTMLVideoElement | null;
   if (!video) return;
-  if (video.paused) video.play();
+  if (video.paused) void video.play().catch(() => {});
   else video.pause();
 }
 

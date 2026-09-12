@@ -183,8 +183,17 @@ const jsonLd = {
       import { initVideo } from "@/lib/video";
       import { initKeyboardShortcuts } from "@/lib/keyboard";
 
-      initVideo();
-      initKeyboardShortcuts();
+      try {
+        initKeyboardShortcuts();
+      } catch (error) {
+        console.error("Failed to init keyboard shortcuts:", error);
+      }
+
+      try {
+        initVideo();
+      } catch (error) {
+        console.error("Failed to init background video:", error);
+      }
     </script>
   </body>
 </html>
