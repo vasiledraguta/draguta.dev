@@ -1,3 +1,5 @@
+import { readStorage, writeStorage } from "@/lib/storage";
+
 export type ThemePreference = "light" | "dark";
 
 const KEY = "theme";
@@ -6,20 +8,12 @@ const prefersDark = () =>
   window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 function readStored(): ThemePreference | null {
-  try {
-    const stored = localStorage.getItem(KEY);
-    return stored === "light" || stored === "dark" ? stored : null;
-  } catch {
-    return null;
-  }
+  const stored = readStorage(KEY);
+  return stored === "light" || stored === "dark" ? stored : null;
 }
 
 function writeStored(pref: ThemePreference): void {
-  try {
-    localStorage.setItem(KEY, pref);
-  } catch {
-    return;
-  }
+  writeStorage(KEY, pref);
 }
 
 export function getPreference(): ThemePreference {
