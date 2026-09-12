@@ -1,0 +1,35 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { made } from "@/data/made";
+---
+
+<Layout title="made" description="things I have built">
+  <section class="pt-16">
+    <div class="space-y-2 mb-stack">
+      <h1>made</h1>
+      <p class="text-muted">things i've built and worked on.</p>
+    </div>
+
+    <ul class="space-y-stack">
+      {
+        made.map((project) => (
+          <li class="space-y-1">
+            {project.url ? (
+              <h2>
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  {project.title}
+                  <span class="sr-only">(opens in new tab)</span>
+                </a>
+              </h2>
+            ) : (
+              <h2>{project.title}</h2>
+            )}
+            <p class="text-muted">{project.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href="/" class="inline-block whitespace-nowrap mt-stack">back to home</a>
+  </section>
+</Layout>

@@ -2,15 +2,12 @@
 import Layout from "@/layouts/Layout.astro";
 ---
 
-<Layout title="404">
-  <section class="flex-1 flex flex-col justify-center items-center">
-    <h1 class="text-3xl font-display">404 - Page Not Found</h1>
-    <p class="text-muted text-sm text-center">
-      Click <a
-        href="/"
-        class="text-foreground hover:text-accent-hover transition-colors"
-        >here</a
-      > to go back to the homepage.
-    </p>
+<Layout title="404" noindex>
+  <section class="flex-1 flex flex-col justify-center items-center gap-2">
+    <h1>404</h1>
+    <div class="text-muted text-center">
+      <p>if you keep digging, you'll find what you're looking for.</p>
+      <p>but for now you can <a href="/">go home</a>.</p>
+    </div>
   </section>
 </Layout>

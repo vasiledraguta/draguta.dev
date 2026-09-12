@@ -1,16 +1,16 @@
 ---
-import ThemeToggle from "@/components/ThemeToggle";
-import SoundToggle from "@/components/SoundToggle";
+import Shortcuts from "@/components/Shortcuts.astro";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="py-8 mt-auto flex items-center justify-between">
-  <div class="text-muted text-sm font-mono">
-    <p>© {currentYear} draguta</p>
+<footer
+  class="py-8 mt-auto flex flex-col-reverse gap-6 sm:flex-row sm:items-end sm:justify-between"
+>
+  <div class="flex flex-wrap items-center gap-3 text-muted">
+    <p class="font-mono">© {currentYear} draguta</p>
+    <span class="opacity-40 pointer-events-none" aria-hidden="true">//</span>
+    <a href="/inspo">inspo</a>
   </div>
-  <div class="flex items-center gap-2">
-    <SoundToggle client:load />
-    <ThemeToggle client:load />
-  </div>
+  <Shortcuts />
 </footer>

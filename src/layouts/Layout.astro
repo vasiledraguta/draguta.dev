@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import VideoBackground from "@/components/VideoBackground.astro";
 import Links from "@/components/Links.astro";
@@ -9,23 +10,37 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
-  wide?: boolean;
-  preloadImages?: string[];
+  imageAlt?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "draguta.dev",
-  description = "Software engineer based in Cluj-Napoca.",
+  description = "a little bit of code, a little bit of design, a little bit of delusion",
   image = "/og-image.png",
-  wide = false,
-  preloadImages = [],
+  imageAlt = "A meadow and hills, from the site's background video.",
+  noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || "https://draguta.dev"
-);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteImage = new URL(image, Astro.site);
 const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "Vasile Draguța",
+      url: "https://draguta.dev",
+    },
+    {
+      "@type": "WebSite",
+      name: "draguta.dev",
+      url: "https://draguta.dev",
+    },
+  ],
+};
 ---
 
 <html lang="en">
@@ -36,96 +51,149 @@ const fullTitle = title === "draguta.dev" ? title : `${title} | draguta.dev`;
     <!-- SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Vasile Draguța" />
     <link rel="canonical" href={canonicalURL} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="theme-color"
+      content="#f2f0e8"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0a0a0a"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Robots -->
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <Fragment>
+          <meta name="robots" content="index, follow" />
+          <meta
+            name="googlebot"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          />
+        </Fragment>
+      )
+    }
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="draguta.dev" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@vasiledraguta" />
+    <meta name="twitter:creator" content="@vasiledraguta" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    {preloadImages.map((src) => <link rel="preload" as="image" href={src} />)}
+    <!-- Fonts -->
+    <Font cssVariable="--font-onest" preload />
+    <Font cssVariable="--font-jetbrains-mono" />
 
-    <link
-      rel="preload"
-      href="https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-      rel="stylesheet"
-    />
     <ClientRouter />
     <script is:inline>
       (function () {
-        function applyTheme() {
-          const theme =
-            localStorage.getItem("theme") ||
-            (window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light");
-          if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
+        function preference() {
+          var stored = null;
+
+          try {
+            stored = localStorage.getItem("theme");
+          } catch (e) {
+            stored = null;
           }
+
+          if (stored === "light" || stored === "dark") return stored;
+
+          var system = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+
+          try {
+            localStorage.setItem("theme", system);
+          } catch (e) {
+            return system;
+          }
+
+          return system;
+        }
+
+        function applyTheme() {
+          document.documentElement.classList.toggle(
+            "dark",
+            preference() === "dark"
+          );
         }
 
         applyTheme();
 
-        document.addEventListener("astro:after-swap", applyTheme);
+        if (!window.__themeInit) {
+          window.__themeInit = true;
+          document.addEventListener("astro:after-swap", applyTheme);
+        }
       })();
     </script>
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
     <VideoBackground />
+    <p id="zen-hint">
+      <kbd class="font-mono text-xs">z</kbd> to exit
+    </p>
     <div id="site-content" class="transition-opacity duration-500">
-      <main
-        id="main-content"
-        class:list={[
-          "relative z-10 flex flex-col min-h-screen mx-auto px-8",
-          wide ? "max-w-6xl" : "max-w-4xl",
-        ]}
+      <div
+        class="relative z-10 flex flex-col min-h-screen mx-auto px-8 max-w-4xl"
       >
-        <nav class="py-6" aria-label="Social links">
+        <header class="py-6">
           <Links />
-        </nav>
-        <slot />
+        </header>
+        <main class="flex-1 flex flex-col">
+          <slot />
+        </main>
         <Footer />
-      </main>
+      </div>
     </div>
     <script>
       import { initVideo } from "@/lib/video";
       import { initKeyboardShortcuts } from "@/lib/keyboard";
 
-      initVideo();
-      initKeyboardShortcuts();
+      try {
+        initKeyboardShortcuts();
+      } catch (error) {
+        console.error("Failed to init keyboard shortcuts:", error);
+      }
+
+      try {
+        initVideo();
+      } catch (error) {
+        console.error("Failed to init background video:", error);
+      }
     </script>
   </body>
 </html>

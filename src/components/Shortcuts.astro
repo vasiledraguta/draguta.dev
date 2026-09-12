@@ -1,0 +1,32 @@
+---
+import { shortcuts } from "@/lib/keyboard";
+---
+
+<ul id="shortcuts" class="flex flex-col gap-1 text-muted">
+  {
+    shortcuts.map(({ key, label }) => (
+      <li>
+        <button
+          type="button"
+          data-shortcut={key}
+          class="group inline-flex items-baseline gap-2.5 hover:text-foreground transition-colors cursor-pointer tap"
+        >
+          <kbd class="font-mono text-xs text-muted group-hover:text-foreground transition-colors">
+            {key}
+          </kbd>
+          <span class="animated-host inline-block" data-label={label}>
+            <span class="inline-block">{label}</span>
+          </span>
+        </button>
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  import { initShortcuts, watchShortcuts } from "@/lib/shortcuts-ui";
+
+  watchShortcuts();
+  initShortcuts();
+  document.addEventListener("astro:page-load", initShortcuts);
+</script>
