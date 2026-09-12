@@ -1,0 +1,22 @@
+---
+import { EMAIL } from "@/lib/email";
+---
+
+<button
+  type="button"
+  id="say-hello"
+  class="link-item tap cursor-pointer"
+  aria-label={`Copy email address ${EMAIL}`}
+>
+  <span class="animated-host inline-block">
+    <span class="inline-block">{EMAIL}</span>
+  </span>
+</button>
+<span id="say-hello-status" class="sr-only" aria-live="polite"></span>
+
+<script>
+  import { initSayHello } from "@/lib/say-hello";
+
+  initSayHello();
+  document.addEventListener("astro:page-load", initSayHello);
+</script>

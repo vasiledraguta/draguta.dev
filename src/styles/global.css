@@ -125,6 +125,46 @@ button.link-item:hover {
   margin: calc(-1 * var(--tap-y)) calc(-1 * var(--tap-x));
 }
 
+.animated-text {
+  --travel: 5px;
+  display: inline-block;
+  animation: text-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animated-text[data-direction="down"] {
+  --travel: -5px;
+}
+
+.animated-text[data-exiting] {
+  animation: text-exit 0.08s cubic-bezier(0.32, 0, 0.67, 0) both;
+}
+
+@keyframes text-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--travel));
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes text-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--travel)));
+    filter: blur(3px);
+  }
+}
+
 #bg-video {
   opacity: 0.38;
   filter: contrast(0.85) saturate(1.2);
