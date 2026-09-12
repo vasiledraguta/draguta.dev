@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 
-import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -9,10 +8,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://draguta.dev",
   trailingSlash: "never",
-  integrations: [
-    react(),
-    sitemap({ filter: (page) => !page.includes("/preview/") }),
-  ],
+  integrations: [sitemap({ filter: (page) => !page.includes("/preview/") })],
+
   fonts: [
     {
       provider: fontProviders.google(),
