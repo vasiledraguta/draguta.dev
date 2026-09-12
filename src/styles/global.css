@@ -3,13 +3,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans:
-    "Onest", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-onest);
   --font-serif: ui-serif, Charter, "Iowan Old Style", Georgia, serif;
-  --font-mono:
-    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    monospace;
+  --font-mono: var(--font-jetbrains-mono);
 
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.5;

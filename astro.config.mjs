@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -12,6 +12,43 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({ filter: (page) => !page.includes("/preview/") }),
+  ],
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: "Onest",
+      cssVariable: "--font-onest",
+      weights: ["400 600"],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: [
+        "ui-sans-serif",
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif",
+      ],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "JetBrains Mono",
+      cssVariable: "--font-jetbrains-mono",
+      weights: ["400"],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: [
+        "ui-monospace",
+        "SFMono-Regular",
+        "SF Mono",
+        "Menlo",
+        "Consolas",
+        "monospace",
+      ],
+    },
   ],
 
   vite: {
