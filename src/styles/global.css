@@ -175,6 +175,19 @@ button.link-item:hover {
   filter: none;
 }
 
+@supports (-webkit-touch-callout: none) {
+  #site-content {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  #site-content > div {
+    min-height: 100%;
+  }
+}
+
 body.zen #site-content {
   opacity: 0;
   pointer-events: none;
