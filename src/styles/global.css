@@ -188,6 +188,7 @@ body.zen #site-content {
   margin: 0;
   text-align: center;
   color: var(--color-foreground);
+  pointer-events: none;
   opacity: 0;
   visibility: hidden;
   transition:
@@ -198,6 +199,10 @@ body.zen #site-content {
 body.zen #zen-hint {
   opacity: 1;
   visibility: visible;
+}
+
+#zen-exit {
+  pointer-events: auto;
 }
 
 body.zen #bg-video {

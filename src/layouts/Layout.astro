@@ -164,7 +164,13 @@ const jsonLd = {
   <body>
     <VideoBackground />
     <p id="zen-hint">
-      <kbd class="font-mono text-xs">z</kbd> to exit
+      <button
+        id="zen-exit"
+        type="button"
+        class="inline-flex items-baseline gap-2 cursor-pointer tap"
+      >
+        <kbd class="font-mono text-xs">z</kbd> to exit
+      </button>
     </p>
     <div id="site-content" class="transition-opacity duration-500">
       <div
@@ -181,10 +187,11 @@ const jsonLd = {
     </div>
     <script>
       import { initVideo } from "@/lib/video";
-      import { initKeyboardShortcuts } from "@/lib/keyboard";
+      import { initKeyboardShortcuts, initZenExit } from "@/lib/keyboard";
 
       try {
         initKeyboardShortcuts();
+        initZenExit();
       } catch (error) {
         console.error("Failed to init keyboard shortcuts:", error);
       }

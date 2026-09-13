@@ -24,6 +24,13 @@ export const shortcuts: Shortcut[] = [
   { key: "z", label: "zen", run: toggleZen },
 ];
 
+export function initZenExit() {
+  document.addEventListener("click", (e) => {
+    const target = e.target as Element | null;
+    if (target?.closest("#zen-exit")) toggleZen();
+  });
+}
+
 export function initKeyboardShortcuts() {
   document.addEventListener("keydown", (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
