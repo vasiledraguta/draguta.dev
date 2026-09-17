@@ -15,7 +15,10 @@ export const scenes: Scene[] = [
   { id: "village", time: 23 },
 ];
 
+let pausedForReading = false;
 let currentScene: Scene | null = null;
+
+const isReadingPage = () => /^\/writings\/[^/]+$/.test(location.pathname);
 
 export const getVideo = () =>
   document.getElementById("bg-video") as HTMLVideoElement | null;
@@ -45,7 +48,20 @@ export function toggleVideo() {
 
   if (video.paused) void video.play().catch(() => {});
   else video.pause();
+  pausedForReading = false;
   setScene(null);
+}
+
+function syncWithPage(video: HTMLVideoElement, wasPlaying: boolean) {
+  if (isReadingPage()) {
+    if (wasPlaying) pausedForReading = true;
+    video.pause();
+    return;
+  }
+
+  if (!pausedForReading) return;
+  pausedForReading = false;
+  void video.play().catch(() => {});
 }
 
 export function initVideo() {
@@ -60,7 +76,7 @@ export function initVideo() {
 
   const handleReducedMotion = (e: MediaQueryList | MediaQueryListEvent) => {
     if (e.matches) video.pause();
-    else play();
+    else if (!isReadingPage()) play();
   };
 
   handleReducedMotion(prefersReducedMotion);
@@ -72,6 +88,12 @@ export function initVideo() {
   }
 
   video.addEventListener("play", () => setScene(null));
+
+  syncWithPage(video, !prefersReducedMotion.matches);
+  document.addEventListener("astro:page-load", () => {
+    if (prefersReducedMotion.matches) pausedForReading = false;
+    syncWithPage(video, !video.paused);
+  });
 
   const save = () => writeStorage(KEY, video.currentTime.toString());
 
