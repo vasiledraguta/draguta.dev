@@ -1,0 +1,46 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const headings = Astro.props.headings.filter(
+  (heading) =>
+    (heading.depth === 2 || heading.depth === 3) &&
+    heading.slug !== "footnote-label"
+);
+---
+
+{
+  headings.length > 0 && (
+    <nav aria-labelledby="toc-title" class="text-xs">
+      <h2 id="toc-title" class="font-mono text-xs text-muted mb-3">
+        contents
+      </h2>
+      <ol class="border-l border-muted/20">
+        {headings.map((heading) => (
+          <li>
+            <a
+              href={`#${heading.slug}`}
+              data-toc-link={heading.slug}
+              class:list={[
+                "link-item block m-0 -ml-px border-l border-transparent py-1 pr-0 transition-colors hover:border-muted/60 aria-[current=location]:border-foreground aria-[current=location]:text-foreground",
+                heading.depth === 3 ? "pl-6" : "pl-3",
+              ]}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+<script>
+  import { initToc } from "@/lib/toc";
+
+  initToc();
+  document.addEventListener("astro:page-load", initToc);
+</script>

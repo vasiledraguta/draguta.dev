@@ -1,0 +1,51 @@
+---
+import { render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import { formatDate, getWritings } from "@/lib/writings";
+
+export async function getStaticPaths() {
+  const writings = await getWritings();
+
+  return writings.map((writing) => ({
+    params: { slug: writing.id },
+    props: { writing },
+  }));
+}
+
+const { writing } = Astro.props;
+const { Content, headings } = await render(writing);
+---
+
+<Layout title={writing.data.title} description={writing.data.description}>
+  <article class="relative pt-16">
+    <header class="space-y-2 mb-stack">
+      <h1>{writing.data.title}</h1>
+      <time
+        class="block font-mono text-xs text-muted"
+        datetime={writing.data.date.toISOString()}
+      >
+        {formatDate(writing.data.date)}
+      </time>
+    </header>
+
+    <aside
+      class="mb-stack xl:absolute xl:inset-y-0 xl:right-full xl:mb-0 xl:mr-8 xl:w-36 xl:pt-17"
+    >
+      <div class="xl:sticky xl:top-8">
+        <TableOfContents headings={headings} />
+      </div>
+    </aside>
+
+    <div
+      data-toc-content
+      class="measure space-y-4 [&_h2]:pt-4 [&_h3]:pt-2 [&_:is(h2,h3)]:scroll-mt-8 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5 [&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:rounded"
+    >
+      <Content />
+    </div>
+
+    <a href="/writings" class="inline-block whitespace-nowrap mt-stack">
+      back to writings
+    </a>
+  </article>
+</Layout>
