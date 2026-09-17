@@ -1,5 +1,6 @@
 import { setText } from "@/lib/animate-text";
-import { EMAIL } from "@/lib/email";
+
+export const EMAIL = "hello@draguta.dev";
 
 type Status = "idle" | "copied" | "failed";
 
