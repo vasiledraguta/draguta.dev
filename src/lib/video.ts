@@ -1,6 +1,6 @@
 import { readStorage, writeStorage } from "@/lib/storage";
 
-const KEY = "video-time";
+const TIME_KEY = "video-time";
 
 export interface Scene {
   id: string;
@@ -20,12 +20,12 @@ let currentScene: Scene | null = null;
 
 const isReadingPage = () => /^\/writings\/[^/]+$/.test(location.pathname);
 
+const play = (video: HTMLVideoElement) => void video.play().catch(() => {});
+
 export const getVideo = () =>
   document.getElementById("bg-video") as HTMLVideoElement | null;
 
-export function getScene(): Scene | null {
-  return currentScene;
-}
+export const getScene = () => currentScene;
 
 function setScene(scene: Scene | null) {
   if (currentScene === scene) return;
@@ -46,8 +46,9 @@ export function toggleVideo() {
   const video = getVideo();
   if (!video) return;
 
-  if (video.paused) void video.play().catch(() => {});
+  if (video.paused) play(video);
   else video.pause();
+
   pausedForReading = false;
   setScene(null);
 }
@@ -61,41 +62,35 @@ function syncWithPage(video: HTMLVideoElement, wasPlaying: boolean) {
 
   if (!pausedForReading) return;
   pausedForReading = false;
-  void video.play().catch(() => {});
+  play(video);
 }
 
 export function initVideo() {
   const video = getVideo();
   if (!video) return;
 
-  const play = () => void video.play().catch(() => {});
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-  const handleReducedMotion = (e: MediaQueryList | MediaQueryListEvent) => {
-    if (e.matches) video.pause();
-    else if (!isReadingPage()) play();
+  const handleReducedMotion = () => {
+    if (reducedMotion.matches) video.pause();
+    else if (!isReadingPage()) play(video);
   };
 
-  handleReducedMotion(prefersReducedMotion);
-  prefersReducedMotion.addEventListener("change", handleReducedMotion);
+  handleReducedMotion();
+  reducedMotion.addEventListener("change", handleReducedMotion);
 
-  const saved = Number.parseFloat(readStorage(KEY) ?? "");
-  if (Number.isFinite(saved) && saved >= 0) {
-    video.currentTime = saved;
-  }
+  const saved = Number.parseFloat(readStorage(TIME_KEY) ?? "");
+  if (Number.isFinite(saved) && saved >= 0) video.currentTime = saved;
 
   video.addEventListener("play", () => setScene(null));
 
-  syncWithPage(video, !prefersReducedMotion.matches);
+  syncWithPage(video, !reducedMotion.matches);
   document.addEventListener("astro:page-load", () => {
-    if (prefersReducedMotion.matches) pausedForReading = false;
+    if (reducedMotion.matches) pausedForReading = false;
     syncWithPage(video, !video.paused);
   });
 
-  const save = () => writeStorage(KEY, video.currentTime.toString());
+  const save = () => writeStorage(TIME_KEY, video.currentTime.toString());
 
   window.addEventListener("pagehide", save);
   document.addEventListener("visibilitychange", () => {
