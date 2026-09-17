@@ -7,7 +7,7 @@
   --font-serif: ui-serif, Charter, "Iowan Old Style", Georgia, serif;
   --font-mono: var(--font-jetbrains-mono);
 
-  --text-xs: 0.75rem;
+  --text-xs: calc(var(--spacing) * 3);
   --text-xs--line-height: 1.5;
   --text-sm: initial;
   --text-base: 1rem;
@@ -19,10 +19,10 @@
 
   --tracking-normal: 0em;
 
-  --spacing-stack: 1.75rem;
+  --spacing-stack: calc(var(--spacing) * 7);
 
-  --tap-x: 0.5rem;
-  --tap-y: 0.25rem;
+  --tap-x: calc(var(--spacing) * 2);
+  --tap-y: var(--spacing);
 
   --measure: 40rem;
 
@@ -89,7 +89,7 @@ body {
     color: var(--color-muted);
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
+    text-underline-offset: calc(1em / 5);
     padding: var(--tap-y) var(--tap-x);
     margin: calc(-1 * var(--tap-y)) calc(-1 * var(--tap-x));
   }
