@@ -1,0 +1,98 @@
+---
+import { Image } from "astro:assets";
+import { scenes } from "@/lib/video";
+import meadow from "@/assets/scenes/meadow.png";
+import sunset from "@/assets/scenes/sunset.png";
+import water from "@/assets/scenes/water.png";
+import wheat from "@/assets/scenes/wheat.png";
+import village from "@/assets/scenes/village.png";
+
+const images: Record<string, ImageMetadata> = {
+  meadow,
+  sunset,
+  water,
+  wheat,
+  village,
+};
+
+const thumb = "h-[27px] w-12 rounded-sm object-cover lg:h-9 lg:w-16";
+const label =
+  "pointer-events-none absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 whitespace-nowrap font-mono text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block";
+---
+
+<section
+  aria-labelledby="scene-title"
+  data-scene-picker
+  class="group/scenes flex items-start gap-2 lg:flex-col"
+>
+  <h2 id="scene-title" class="sr-only">background</h2>
+
+  <button
+    type="button"
+    data-scene-toggle
+    aria-expanded="false"
+    aria-controls="scene-list"
+    aria-label="background"
+    class="group relative cursor-pointer rounded-sm group-data-[open]/scenes:hidden"
+  >
+    <span
+      class="relative block rounded-sm opacity-50 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[active]/scenes:opacity-100"
+    >
+      {
+        scenes.map((scene, index) => (
+          <Image
+            src={images[scene.id]!}
+            alt=""
+            width={96}
+            height={54}
+            densities={[1, 2]}
+            data-thumb={scene.id}
+            hidden={index !== 0}
+            class={thumb}
+          />
+        ))
+      }
+    </span>
+    <span aria-hidden="true" class={label}>background</span>
+  </button>
+
+  <ul
+    id="scene-list"
+    class="scene-list hidden gap-2 group-data-[open]/scenes:flex lg:flex-col"
+  >
+    {
+      scenes.map((scene, index) => (
+        <li data-scene-item={scene.id} style={`--i: ${index}`}>
+          <button
+            type="button"
+            data-scene={scene.id}
+            aria-pressed="false"
+            aria-label={scene.id}
+            class="group relative block cursor-pointer rounded-sm outline-offset-2 aria-pressed:outline aria-pressed:outline-1 aria-pressed:outline-foreground"
+          >
+            <span class="scene-frame relative block rounded-sm opacity-70 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-aria-pressed:opacity-100">
+              <Image
+                src={images[scene.id]!}
+                alt=""
+                width={96}
+                height={54}
+                densities={[1, 2]}
+                class={thumb}
+              />
+            </span>
+            <span aria-hidden="true" class={label}>
+              {scene.id}
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<script>
+  import { initScenePicker } from "@/lib/scene-picker";
+
+  initScenePicker();
+  document.addEventListener("astro:page-load", initScenePicker);
+</script>

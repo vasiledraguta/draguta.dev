@@ -1,16 +1,10 @@
 import { togglePreference } from "@/lib/theme";
+import { toggleVideo } from "@/lib/video";
 
 export interface Shortcut {
   key: string;
   label: string;
   run: () => void;
-}
-
-function toggleVideo() {
-  const video = document.getElementById("bg-video") as HTMLVideoElement | null;
-  if (!video) return;
-  if (video.paused) void video.play().catch(() => {});
-  else video.pause();
 }
 
 function toggleZen() {

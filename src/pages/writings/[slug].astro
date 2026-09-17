@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import ScenePicker from "@/components/ScenePicker.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import { formatDate, getWritings } from "@/lib/writings";
 
@@ -28,6 +29,10 @@ const { Content, headings } = await render(writing);
         {formatDate(writing.data.date)}
       </time>
     </header>
+
+    <div class="mb-stack lg:absolute lg:right-0 lg:top-18 lg:mb-0">
+      <ScenePicker />
+    </div>
 
     <aside
       class="mb-stack xl:absolute xl:inset-y-0 xl:right-full xl:mb-0 xl:mr-8 xl:w-36 xl:pt-17"
