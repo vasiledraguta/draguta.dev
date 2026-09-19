@@ -18,7 +18,7 @@ export const scenes: Scene[] = [
 let pausedForReading = false;
 let currentScene: Scene | null = null;
 
-const isReadingPage = () => /^\/writings\/[^/]+$/.test(location.pathname);
+const isReadingPage = () => /^\/writings\/[^/]+\/?$/.test(location.pathname);
 
 const play = (video: HTMLVideoElement) => void video.play().catch(() => {});
 
