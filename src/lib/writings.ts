@@ -1,10 +1,7 @@
 import { getCollection } from "astro:content";
 
 export async function getWritings() {
-  const writings = await getCollection(
-    "writings",
-    ({ data }) => import.meta.env.DEV || !data.draft
-  );
+  const writings = await getCollection("writings");
 
   return writings.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }

@@ -8,7 +8,6 @@ const writings = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
-    draft: z.boolean().default(false),
   }),
 });
 
