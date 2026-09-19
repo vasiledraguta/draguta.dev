@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  note?: string;
+  image?: ImageMetadata;
+  alt?: string;
+}
+
+const { note, image, alt = "" } = Astro.props;
+const id = `hint-${crypto.randomUUID().slice(0, 8)}`;
+---
+
+<span data-hint
+  ><button
+    type="button"
+    popovertarget={id}
+    data-hint-trigger
+    class="hint-trigger"><slot /></button
+  ><span id={id} popover data-hint-popover class="hint-popover"
+    ><svg aria-hidden="true" class="hint-arrow"
+      ><path data-hint-line pathLength="1"></path><path data-hint-head
+      ></path></svg
+    ><span
+      data-hint-card
+      class="hint-card flex flex-col gap-3 p-4 text-foreground"
+      >{
+        image && (
+          <Image
+            src={image}
+            alt={alt}
+            widths={[320, 640]}
+            sizes="20rem"
+            loading="eager"
+            class="block w-full rounded-sm"
+          />
+        )
+      }{note && <span class="block">{note}</span>}</span
+    ></span
+  ></span
+>
+
+<script>
+  import { initHints } from "@/lib/hint";
+
+  initHints();
+  document.addEventListener("astro:page-load", initHints);
+</script>
