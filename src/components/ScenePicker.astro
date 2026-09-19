@@ -15,15 +15,13 @@ const images: Record<string, ImageMetadata> = {
   village,
 };
 
-const thumb = "h-[27px] w-12 rounded-sm object-cover lg:h-9 lg:w-16";
-const label =
-  "pointer-events-none absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 whitespace-nowrap font-mono text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block";
+const thumb = "h-[27px] w-12 rounded-sm object-cover";
 ---
 
 <section
   aria-labelledby="scene-title"
   data-scene-picker
-  class="group/scenes flex items-start gap-2 lg:flex-col"
+  class="group/scenes flex w-fit items-start gap-2"
 >
   <h2 id="scene-title" class="sr-only">background</h2>
 
@@ -53,12 +51,11 @@ const label =
         ))
       }
     </span>
-    <span aria-hidden="true" class={label}>background</span>
   </button>
 
   <ul
     id="scene-list"
-    class="scene-list hidden gap-2 group-data-[open]/scenes:flex lg:flex-col"
+    class="scene-list hidden gap-2 group-data-[open]/scenes:flex"
   >
     {
       scenes.map((scene, index) => (
@@ -79,9 +76,6 @@ const label =
                 densities={[1, 2]}
                 class={thumb}
               />
-            </span>
-            <span aria-hidden="true" class={label}>
-              {scene.id}
             </span>
           </button>
         </li>

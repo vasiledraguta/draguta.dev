@@ -221,13 +221,6 @@ button.link-item:hover {
   transition-delay: 0s;
 }
 
-@media (width >= 64rem) {
-  .scene-list[data-starting-style] > li,
-  .scene-list[data-ending-style] > li {
-    transform: translateY(calc(var(--i, 0) * (-100% - var(--spacing) * 2)));
-  }
-}
-
 #bg-video {
   opacity: 0.38;
   filter: contrast(0.85) saturate(1.2);
