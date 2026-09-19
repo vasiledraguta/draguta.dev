@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import ScenePicker from "@/components/ScenePicker.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import Hint from "@/components/Hint.astro";
+import Link from "@/components/Link.astro";
 import { formatDate, getWritings } from "@/lib/writings";
 
 export async function getStaticPaths() {
@@ -48,7 +49,7 @@ const { Content, headings } = await render(writing);
       data-hint-column
       class="measure space-y-4 [&_h2]:pt-4 [&_h3]:pt-2 [&_:is(h2,h3)]:scroll-mt-8 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5 [&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:rounded"
     >
-      <Content components={{ Hint }} />
+      <Content components={{ Hint, a: Link }} />
     </div>
 
     <a href="/writings" class="inline-block whitespace-nowrap mt-stack">

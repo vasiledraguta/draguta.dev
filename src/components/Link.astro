@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, ...rest } = Astro.props;
+const external = /^https?:\/\//.test(String(href ?? ""));
+---
+
+{
+  external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
+      <slot />
+      <span class="sr-only"> (opens in new tab)</span>
+    </a>
+  ) : (
+    <a href={href} {...rest}>
+      <slot />
+    </a>
+  )
+}
