@@ -1,0 +1,40 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { formatDate, getWritings } from "@/lib/writings";
+
+const writings = await getWritings();
+---
+
+<Layout title="writings" description="things i've written">
+  <section class="pt-16">
+    <div class="space-y-2 mb-stack">
+      <h1>writings</h1>
+      <p class="text-muted">things i've written.</p>
+    </div>
+
+    {
+      writings.length > 0 ? (
+        <ul class="space-y-stack">
+          {writings.map((writing) => (
+            <li class="space-y-1">
+              <h2>
+                <a href={`/writings/${writing.id}`}>{writing.data.title}</a>
+              </h2>
+              <p class="text-muted">{writing.data.description}</p>
+              <time
+                class="block font-mono text-xs text-muted"
+                datetime={writing.data.date.toISOString()}
+              >
+                {formatDate(writing.data.date)}
+              </time>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-muted">nothing here yet.</p>
+      )
+    }
+
+    <a href="/" class="inline-block whitespace-nowrap mt-stack">back to home</a>
+  </section>
+</Layout>

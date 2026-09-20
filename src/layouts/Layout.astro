@@ -187,11 +187,10 @@ const jsonLd = {
     </div>
     <script>
       import { initVideo } from "@/lib/video";
-      import { initKeyboardShortcuts, initZenExit } from "@/lib/keyboard";
+      import { initShortcuts } from "@/lib/shortcuts";
 
       try {
-        initKeyboardShortcuts();
-        initZenExit();
+        initShortcuts();
       } catch (error) {
         console.error("Failed to init keyboard shortcuts:", error);
       }

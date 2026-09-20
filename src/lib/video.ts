@@ -1,31 +1,96 @@
 import { readStorage, writeStorage } from "@/lib/storage";
 
-const KEY = "video-time";
+const TIME_KEY = "video-time";
 
-export function initVideo() {
-  const video = document.getElementById("bg-video") as HTMLVideoElement | null;
+export interface Scene {
+  id: string;
+  time: number;
+}
+
+export const scenes: Scene[] = [
+  { id: "meadow", time: 1 },
+  { id: "sunset", time: 6 },
+  { id: "water", time: 8.75 },
+  { id: "wheat", time: 20.1 },
+  { id: "village", time: 23 },
+];
+
+let pausedForReading = false;
+let currentScene: Scene | null = null;
+
+const isReadingPage = () => /^\/writings\/[^/]+\/?$/.test(location.pathname);
+
+const play = (video: HTMLVideoElement) => void video.play().catch(() => {});
+
+export const getVideo = () =>
+  document.getElementById("bg-video") as HTMLVideoElement | null;
+
+export const getScene = () => currentScene;
+
+function setScene(scene: Scene | null) {
+  if (currentScene === scene) return;
+  currentScene = scene;
+  window.dispatchEvent(new Event("scene-change"));
+}
+
+export function showScene(scene: Scene) {
+  const video = getVideo();
   if (!video) return;
 
-  const play = () => void video.play().catch(() => {});
+  video.pause();
+  video.currentTime = scene.time;
+  setScene(scene);
+}
 
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
+export function toggleVideo() {
+  const video = getVideo();
+  if (!video) return;
 
-  const handleReducedMotion = (e: MediaQueryList | MediaQueryListEvent) => {
-    if (e.matches) video.pause();
-    else play();
-  };
+  if (video.paused) play(video);
+  else video.pause();
 
-  handleReducedMotion(prefersReducedMotion);
-  prefersReducedMotion.addEventListener("change", handleReducedMotion);
+  pausedForReading = false;
+  setScene(null);
+}
 
-  const saved = Number.parseFloat(readStorage(KEY) ?? "");
-  if (Number.isFinite(saved) && saved >= 0) {
-    video.currentTime = saved;
+function syncWithPage(video: HTMLVideoElement, wasPlaying: boolean) {
+  if (isReadingPage()) {
+    if (wasPlaying) pausedForReading = true;
+    video.pause();
+    return;
   }
 
-  const save = () => writeStorage(KEY, video.currentTime.toString());
+  if (!pausedForReading) return;
+  pausedForReading = false;
+  play(video);
+}
+
+export function initVideo() {
+  const video = getVideo();
+  if (!video) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const handleReducedMotion = () => {
+    if (reducedMotion.matches) video.pause();
+    else if (!isReadingPage()) play(video);
+  };
+
+  handleReducedMotion();
+  reducedMotion.addEventListener("change", handleReducedMotion);
+
+  const saved = Number.parseFloat(readStorage(TIME_KEY) ?? "");
+  if (Number.isFinite(saved) && saved >= 0) video.currentTime = saved;
+
+  video.addEventListener("play", () => setScene(null));
+
+  syncWithPage(video, !reducedMotion.matches);
+  document.addEventListener("astro:page-load", () => {
+    if (reducedMotion.matches) pausedForReading = false;
+    syncWithPage(video, !video.paused);
+  });
+
+  const save = () => writeStorage(TIME_KEY, video.currentTime.toString());
 
   window.addEventListener("pagehide", save);
   document.addEventListener("visibilitychange", () => {

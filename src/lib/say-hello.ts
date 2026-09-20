@@ -1,21 +1,24 @@
 import { setText } from "@/lib/animate-text";
-import { EMAIL } from "@/lib/email";
 
-type Status = "idle" | "copied" | "failed";
+export const EMAIL = "hello@draguta.dev";
 
-const LABELS: Record<Status, string> = {
-  idle: EMAIL,
-  copied: "copied!",
-  failed: "copy failed",
+const STATES = {
+  idle: { label: EMAIL, message: "", hold: 0 },
+  copied: {
+    label: "copied!",
+    message: "Email address copied to clipboard",
+    hold: 1200,
+  },
+  failed: {
+    label: "copy failed",
+    message: "Could not copy the email address",
+    hold: 2400,
+  },
 };
 
-const MESSAGES: Record<Status, string> = {
-  idle: "",
-  copied: "Email address copied to clipboard",
-  failed: "Could not copy the email address",
-};
+type Status = keyof typeof STATES;
 
-const writeToClipboard = async (text: string) => {
+async function writeToClipboard(text: string) {
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(text);
     return;
@@ -30,10 +33,10 @@ const writeToClipboard = async (text: string) => {
   textarea.select();
 
   const copied = document.execCommand("copy");
-  document.body.removeChild(textarea);
+  textarea.remove();
 
   if (!copied) throw new Error("execCommand returned false");
-};
+}
 
 export function initSayHello(): void {
   const button = document.getElementById("say-hello");
@@ -47,8 +50,8 @@ export function initSayHello(): void {
   let timer: ReturnType<typeof setTimeout> | undefined;
 
   const render = (state: Status) => {
-    setText(host, LABELS[state], state === "idle" ? "down" : "up");
-    status.textContent = MESSAGES[state];
+    setText(host, STATES[state].label, state === "idle" ? "down" : "up");
+    status.textContent = STATES[state].message;
   };
 
   button.addEventListener("click", async () => {
@@ -63,6 +66,6 @@ export function initSayHello(): void {
 
     render(next);
     clearTimeout(timer);
-    timer = setTimeout(() => render("idle"), next === "copied" ? 1200 : 2400);
+    timer = setTimeout(() => render("idle"), STATES[next].hold);
   });
 }

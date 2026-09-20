@@ -1,21 +1,30 @@
-export type SwapDirection = "up" | "down";
+type Direction = "up" | "down";
 
 const EXIT_MS = 80;
 
 const timers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
 
+function span(value: string, direction?: Direction): HTMLElement {
+  const el = document.createElement("span");
+  el.textContent = value;
+  el.className = direction ? "animated-text" : "inline-block";
+  if (direction) el.dataset.direction = direction;
+  return el;
+}
+
 export function setText(
   host: HTMLElement,
   value: string,
-  direction: SwapDirection = "up",
+  direction: Direction = "up",
   animate = true
 ): void {
   const current = host.firstElementChild as HTMLElement | null;
   if (current?.textContent === value) return;
 
+  clearTimeout(timers.get(host));
+
   if (!current || !animate) {
-    clearTimeout(timers.get(host));
-    host.replaceChildren(plain(value));
+    host.replaceChildren(span(value));
     return;
   }
 
@@ -23,22 +32,8 @@ export function setText(
   current.dataset.direction = direction;
   current.dataset.exiting = "";
 
-  clearTimeout(timers.get(host));
   timers.set(
     host,
-    setTimeout(() => {
-      const next = document.createElement("span");
-      next.className = "animated-text";
-      next.dataset.direction = direction;
-      next.textContent = value;
-      host.replaceChildren(next);
-    }, EXIT_MS)
+    setTimeout(() => host.replaceChildren(span(value, direction)), EXIT_MS)
   );
-}
-
-function plain(value: string): HTMLElement {
-  const span = document.createElement("span");
-  span.className = "inline-block";
-  span.textContent = value;
-  return span;
 }
