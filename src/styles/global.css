@@ -11,13 +11,14 @@
   --text-xs--line-height: 1.5;
   --text-sm: initial;
   --text-base: 1rem;
-  --text-base--line-height: 1.75;
+  --text-base--line-height: 1.6;
   --text-lg: initial;
   --text-xl: initial;
   --text-2xl: initial;
   --text-3xl: initial;
 
-  --tracking-normal: 0em;
+  --tracking-normal: -0.01em;
+  --tracking-tight: -0.02em;
 
   --spacing-stack: calc(var(--spacing) * 7);
 
@@ -28,7 +29,7 @@
 
   --color-background: #f2f0e8;
   --color-foreground: #0f0e08;
-  --color-muted: #3a3932;
+  --color-muted: #6e6c62;
 }
 
 .dark {
@@ -41,6 +42,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
+  font-weight: 450;
   letter-spacing: var(--tracking-normal);
   text-rendering: optimizeLegibility;
   background-color: var(--color-background);
@@ -64,7 +66,7 @@ body {
     font-size: var(--text-base);
     font-weight: 500;
     line-height: var(--text-base--line-height);
-    letter-spacing: var(--tracking-normal);
+    letter-spacing: var(--tracking-tight);
     text-wrap: balance;
   }
 
@@ -114,6 +116,30 @@ button.link-item {
 a.link-item:hover,
 button.link-item:hover {
   color: var(--color-foreground);
+}
+
+/* external links: small ↗ after any new-tab link (social nav excluded) */
+a[target="_blank"]:not(.link-item)::after {
+  content: "↗";
+  display: inline-block;
+  margin-left: 0.15em;
+  font-size: 0.8em;
+  text-decoration: none;
+  opacity: 0.6;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+a[target="_blank"]:not(.link-item):hover::after {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a[target="_blank"]:not(.link-item):hover::after {
+    transform: none;
+  }
 }
 
 @utility measure {
