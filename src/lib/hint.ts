@@ -3,7 +3,7 @@ import { getArrow } from "perfect-arrows";
 const GAP = 48;
 const EDGE = 16;
 const SPACE = 8;
-const HEAD = 8;
+const HEAD = 9;
 const SPREAD = Math.PI / 6;
 const WIDTH = 320;
 
@@ -19,8 +19,8 @@ function drawArrow(
   to: [number, number]
 ) {
   const [sx, sy, cx, cy, ex, ey, angle] = getArrow(...from, ...to, {
-    bow: 0.2,
-    stretch: 0.5,
+    bow: 0.45,
+    stretch: 0.25,
     straights: false,
     padStart: 4,
     padEnd: 4,
@@ -83,8 +83,9 @@ function setup(root: HTMLElement) {
 
   const choose = () => {
     const fits = window.innerWidth - column().right - GAP - EDGE >= WIDTH;
-    const low = trigger.getBoundingClientRect().top > window.innerHeight * 0.4;
-    popover.dataset.placement = fits ? "side" : low ? "above" : "below";
+    const { top, bottom } = trigger.getBoundingClientRect();
+    const roomy = top > window.innerHeight - bottom;
+    popover.dataset.placement = fits ? "side" : roomy ? "above" : "below";
   };
 
   const setPx = (name: string, value: number) =>
@@ -104,15 +105,24 @@ function setup(root: HTMLElement) {
     popover.style.translate = "";
     delete popover.dataset.instant;
 
-    if (popover.dataset.placement === "above") {
-      setPx("--hint-top", scroll + rect.top - SPACE);
-      setPx("--hint-max", rect.top - SPACE - EDGE);
-      return;
-    }
+    if (popover.dataset.placement !== "side") {
+      const { left: start, width } = column();
+      const left = Math.max(EDGE, start - EDGE);
+      setPx("--hint-left", left);
+      setPx(
+        "--hint-width",
+        Math.min(width + EDGE * 2, window.innerWidth - left - EDGE)
+      );
 
-    if (popover.dataset.placement === "below") {
-      setPx("--hint-top", scroll + rect.bottom + SPACE);
-      setPx("--hint-max", window.innerHeight - rect.bottom - SPACE - EDGE);
+      const height = card.offsetHeight;
+      const ideal =
+        popover.dataset.placement === "above"
+          ? rect.top - SPACE - height
+          : rect.bottom + SPACE;
+      setPx(
+        "--hint-top",
+        scroll + clamp(ideal, EDGE, window.innerHeight - height - EDGE)
+      );
       return;
     }
 

@@ -27,6 +27,8 @@
 
   --measure: 40rem;
 
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
   --color-background: #f2f0e8;
   --color-foreground: #0f0e08;
   --color-muted: #6e6c62;
@@ -47,9 +49,6 @@ body {
   text-rendering: optimizeLegibility;
   background-color: var(--color-background);
   color: var(--color-foreground);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -101,9 +100,11 @@ body {
     transition: color 0.15s ease;
   }
 
-  a:hover,
-  button:hover {
-    color: var(--color-foreground);
+  @media (hover: hover) {
+    a:hover,
+    button:hover {
+      color: var(--color-foreground);
+    }
   }
 }
 
@@ -113,9 +114,11 @@ button.link-item {
   text-decoration-line: none;
 }
 
-a.link-item:hover,
-button.link-item:hover {
-  color: var(--color-foreground);
+@media (hover: hover) {
+  a.link-item:hover,
+  button.link-item:hover {
+    color: var(--color-foreground);
+  }
 }
 
 /* external links: small ↗ after any new-tab link (social nav excluded) */
@@ -131,14 +134,10 @@ a[target="_blank"]:not(.link-item)::after {
     transform 0.15s ease;
 }
 
-a[target="_blank"]:not(.link-item):hover::after {
-  opacity: 1;
-  transform: translate(1px, -1px);
-}
-
-@media (prefers-reduced-motion: reduce) {
+@media (hover: hover) and (pointer: fine) {
   a[target="_blank"]:not(.link-item):hover::after {
-    transform: none;
+    opacity: 1;
+    transform: translate(1px, -1px);
   }
 }
 
@@ -154,7 +153,9 @@ a[target="_blank"]:not(.link-item):hover::after {
 .animated-text {
   --travel: 5px;
   display: inline-block;
-  animation: text-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition-property: opacity, transform, filter;
+  transition-duration: 0.18s;
+  transition-timing-function: var(--ease-out);
 }
 
 .animated-text[data-direction="down"] {
@@ -162,31 +163,16 @@ a[target="_blank"]:not(.link-item):hover::after {
 }
 
 .animated-text[data-exiting] {
-  animation: text-exit 0.08s cubic-bezier(0.32, 0, 0.67, 0) both;
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--travel)));
+  filter: blur(3px);
+  transition-duration: 0.08s;
 }
 
-@keyframes text-enter {
-  from {
+@starting-style {
+  .animated-text {
     opacity: 0;
     transform: translateY(var(--travel));
-    filter: blur(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes text-exit {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(calc(-1 * var(--travel)));
     filter: blur(3px);
   }
 }
@@ -198,8 +184,16 @@ a[target="_blank"]:not(.link-item):hover::after {
   opacity: 0.5;
 }
 
-.scene-list > li [data-scene] {
-  transition: outline-color 0.2s ease;
+.scene-list > li [data-scene],
+[data-scene-toggle] {
+  transition:
+    outline-color 0.2s ease,
+    transform 0.16s var(--ease-out);
+}
+
+.scene-list > li [data-scene]:active,
+[data-scene-toggle]:active {
+  transform: scale(0.97);
 }
 
 .scene-list[data-ending-style] > li[data-shown] [data-scene] {
@@ -207,7 +201,7 @@ a[target="_blank"]:not(.link-item):hover::after {
 }
 
 .scene-list {
-  --duration: 0.3s;
+  --duration: 0.25s;
   --step: 30ms;
 }
 
@@ -216,7 +210,7 @@ a[target="_blank"]:not(.link-item):hover::after {
   z-index: calc(10 - var(--i, 0));
   transition-property: transform, opacity, filter;
   transition-duration: var(--duration);
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-timing-function: var(--ease-out);
   transition-delay: calc(max(var(--i, 0) - 1, 0) * var(--step));
 }
 
@@ -232,8 +226,8 @@ a[target="_blank"]:not(.link-item):hover::after {
 }
 
 .scene-list[data-ending-style] > li {
-  transition-duration: var(--duration);
-  transition-delay: calc(max(var(--i, 0) - 1, 0) * var(--step));
+  transition-duration: 0.2s;
+  transition-delay: 0s;
   transition-timing-function:
     cubic-bezier(0.3, 0.5, 0.4, 1), linear(0, 0 27%, 1 71%),
     linear(0, 0 27%, 1 71%);
@@ -270,6 +264,18 @@ a[target="_blank"]:not(.link-item):hover::after {
   }
 }
 
+#site-content,
+#bg-video,
+#zen-hint {
+  transition-property: opacity, filter, visibility;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+body.zen :is(#site-content, #bg-video, #zen-hint) {
+  transition-duration: 0.3s;
+}
+
 body.zen #site-content {
   opacity: 0;
   pointer-events: none;
@@ -286,9 +292,6 @@ body.zen #site-content {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s ease;
 }
 
 body.zen #zen-hint {
@@ -329,15 +332,11 @@ a:focus-visible {
   border: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
 }
 
 .hint-trigger {
@@ -376,9 +375,9 @@ a:focus-visible {
   pointer-events: none;
   opacity: 0;
   transition:
-    opacity 0.2s ease,
-    display 0.2s allow-discrete,
-    overlay 0.2s allow-discrete;
+    opacity 0.15s ease,
+    display 0.15s allow-discrete,
+    overlay 0.15s allow-discrete;
 }
 
 .hint-popover:popover-open {
@@ -392,8 +391,8 @@ a:focus-visible {
   height: 100%;
   overflow: visible;
   fill: none;
-  stroke: var(--color-muted);
-  stroke-width: 2px;
+  stroke: var(--color-foreground);
+  stroke-width: 1px;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -401,7 +400,7 @@ a:focus-visible {
 .hint-arrow [data-hint-line] {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
+  transition: stroke-dashoffset 0.2s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
 
 .hint-arrow [data-hint-head] {
@@ -415,17 +414,63 @@ a:focus-visible {
 
 .hint-popover:popover-open [data-hint-head] {
   opacity: 1;
-  transition-delay: 0.2s;
+  transition-delay: 0.15s;
 }
 
 .hint-card {
+  position: absolute;
+  overflow-y: auto;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateX(calc(var(--spacing) * -2)) scale(0.97);
+  transition-property: opacity, transform;
+  transition-duration: 0.15s;
+  transition-timing-function: var(--ease-out);
+}
+
+.hint-media {
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2)
+    calc(var(--spacing) * 7);
+  background: #fdfcf8;
+  box-shadow: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 6)
+    calc(var(--spacing) * -2) color-mix(in srgb, black 30%, transparent);
+  rotate: -2deg;
+}
+
+.hint-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: normal;
+  text-wrap: pretty;
+}
+
+.hint-popover:popover-open .hint-card {
+  opacity: 1;
+  transform: none;
+  transition-duration: 0.2s;
+  transition-delay: 0.1s;
+}
+
+.hint-popover[data-placement="side"] .hint-card {
+  top: var(--hint-top);
+  transform-origin: left center;
+  left: var(--hint-left);
+  width: calc(var(--spacing) * 80);
+  overflow: visible;
+}
+
+.hint-popover:is([data-placement="above"], [data-placement="below"])
+  .hint-card {
   --glass: color-mix(in srgb, var(--color-background) 55%, transparent);
   --glass-edge: color-mix(in srgb, var(--color-foreground) 10%, transparent);
   --glass-shine: color-mix(in srgb, white 60%, transparent);
   --glass-shadow: color-mix(in srgb, var(--color-foreground) 20%, transparent);
-  position: absolute;
-  overflow-y: auto;
-  pointer-events: auto;
+  display: block;
+  left: var(--hint-left);
+  width: var(--hint-width);
+  max-width: calc(var(--spacing) * 100);
+  max-height: calc(100dvh - var(--spacing) * 8);
+  padding: calc(var(--spacing) * 4);
   border: 1px solid var(--glass-edge);
   border-radius: calc(var(--spacing) * 2);
   background: var(--glass);
@@ -435,44 +480,28 @@ a:focus-visible {
       calc(var(--spacing) * -3) var(--glass-shadow);
   -webkit-backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
   backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
-  opacity: 0;
-  transform: translateX(calc(var(--spacing) * -2)) scale(0.97);
-  transition-property: opacity, transform;
-  transition-duration: 0.22s;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0s;
 }
 
-.dark .hint-card {
+.dark
+  .hint-popover:is([data-placement="above"], [data-placement="below"])
+  .hint-card {
   --glass: color-mix(in srgb, var(--color-background) 45%, transparent);
   --glass-edge: color-mix(in srgb, var(--color-foreground) 12%, transparent);
   --glass-shine: color-mix(in srgb, white 10%, transparent);
   --glass-shadow: color-mix(in srgb, black 60%, transparent);
 }
 
-.hint-popover:popover-open .hint-card {
-  opacity: 1;
-  transform: none;
-  transition-delay: 0.18s;
-}
-
-.hint-popover[data-placement="side"] .hint-card {
-  top: var(--hint-top);
-  left: var(--hint-left);
-  width: calc(var(--spacing) * 80);
-  max-height: calc(100dvh - var(--spacing) * 8);
-}
-
 .hint-popover:is([data-placement="above"], [data-placement="below"])
-  .hint-card {
-  right: calc(var(--spacing) * 4);
-  left: calc(var(--spacing) * 4);
-  max-height: var(--hint-max);
-  transition-delay: 0s;
+  .hint-media {
+  float: left;
+  width: min(45%, calc(var(--spacing) * 40));
+  margin: var(--spacing) calc(var(--spacing) * 4) calc(var(--spacing) * 2) 0;
+  padding: var(--spacing) var(--spacing) calc(var(--spacing) * 4);
 }
 
 .hint-popover[data-placement="above"] .hint-card {
   top: var(--hint-top);
-  translate: 0 -100%;
   transform: translateY(calc(var(--spacing) * 2)) scale(0.97);
   transform-origin: bottom center;
 }
@@ -525,9 +554,27 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hint-popover,
-  .hint-popover *,
-  .hint-popover:popover-open * {
+  .animated-text,
+  .animated-text[data-direction="down"] {
+    --travel: 0px;
+  }
+
+  .scene-list > li {
+    transition-property: opacity, filter;
+    transition-delay: 0s;
+  }
+
+  .scene-list > li [data-scene]:active,
+  [data-scene-toggle]:active,
+  a[target="_blank"]:not(.link-item):hover::after {
+    transform: none;
+  }
+
+  .hint-card {
+    transition-property: opacity;
+  }
+
+  .hint-arrow [data-hint-line] {
     transition: none;
   }
 }

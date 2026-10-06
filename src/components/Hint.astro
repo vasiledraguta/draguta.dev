@@ -23,19 +23,21 @@ const id = `hint-${crypto.randomUUID().slice(0, 8)}`;
       ></path></svg
     ><span
       data-hint-card
-      class="hint-card flex flex-col gap-3 p-4 text-foreground"
+      class="hint-card flex flex-col gap-4 p-2 text-foreground"
       >{
         image && (
-          <Image
-            src={image}
-            alt={alt}
-            widths={[320, 640]}
-            sizes="20rem"
-            loading="eager"
-            class="block w-full rounded-sm"
-          />
+          <span class="hint-media block">
+            <Image
+              src={image}
+              alt={alt}
+              widths={[320, 640]}
+              sizes="20rem"
+              loading="eager"
+              class="block w-full"
+            />
+          </span>
         )
-      }{note && <span class="block">{note}</span>}</span
+      }{note && <span class="hint-note block">{note}</span>}</span
     ></span
   ></span
 >
