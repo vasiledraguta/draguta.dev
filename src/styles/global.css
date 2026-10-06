@@ -391,8 +391,8 @@ a:focus-visible {
   height: 100%;
   overflow: visible;
   fill: none;
-  stroke: var(--color-muted);
-  stroke-width: 2px;
+  stroke: var(--color-foreground);
+  stroke-width: 1px;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -418,22 +418,9 @@ a:focus-visible {
 }
 
 .hint-card {
-  --glass: color-mix(in srgb, var(--color-background) 55%, transparent);
-  --glass-edge: color-mix(in srgb, var(--color-foreground) 10%, transparent);
-  --glass-shine: color-mix(in srgb, white 60%, transparent);
-  --glass-shadow: color-mix(in srgb, var(--color-foreground) 20%, transparent);
   position: absolute;
   overflow-y: auto;
   pointer-events: auto;
-  border: 1px solid var(--glass-edge);
-  border-radius: calc(var(--spacing) * 2);
-  background: var(--glass);
-  box-shadow:
-    inset 0 1px 0 var(--glass-shine),
-    0 calc(var(--spacing) * 3) calc(var(--spacing) * 10)
-      calc(var(--spacing) * -3) var(--glass-shadow);
-  -webkit-backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
-  backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
   opacity: 0;
   transform: translateX(calc(var(--spacing) * -2)) scale(0.97);
   transition-property: opacity, transform;
@@ -441,11 +428,20 @@ a:focus-visible {
   transition-timing-function: var(--ease-out);
 }
 
-.dark .hint-card {
-  --glass: color-mix(in srgb, var(--color-background) 45%, transparent);
-  --glass-edge: color-mix(in srgb, var(--color-foreground) 12%, transparent);
-  --glass-shine: color-mix(in srgb, white 10%, transparent);
-  --glass-shadow: color-mix(in srgb, black 60%, transparent);
+.hint-media {
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2)
+    calc(var(--spacing) * 7);
+  background: #fdfcf8;
+  box-shadow: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 6)
+    calc(var(--spacing) * -2) color-mix(in srgb, black 30%, transparent);
+  rotate: -2deg;
+}
+
+.hint-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: normal;
+  text-wrap: pretty;
 }
 
 .hint-popover:popover-open .hint-card {
@@ -460,20 +456,52 @@ a:focus-visible {
   transform-origin: left center;
   left: var(--hint-left);
   width: calc(var(--spacing) * 80);
-  max-height: calc(100dvh - var(--spacing) * 8);
+  overflow: visible;
 }
 
 .hint-popover:is([data-placement="above"], [data-placement="below"])
   .hint-card {
-  right: calc(var(--spacing) * 4);
-  left: calc(var(--spacing) * 4);
-  max-height: var(--hint-max);
+  --glass: color-mix(in srgb, var(--color-background) 55%, transparent);
+  --glass-edge: color-mix(in srgb, var(--color-foreground) 10%, transparent);
+  --glass-shine: color-mix(in srgb, white 60%, transparent);
+  --glass-shadow: color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  display: block;
+  left: var(--hint-left);
+  width: var(--hint-width);
+  max-width: calc(var(--spacing) * 100);
+  max-height: calc(100dvh - var(--spacing) * 8);
+  padding: calc(var(--spacing) * 4);
+  border: 1px solid var(--glass-edge);
+  border-radius: calc(var(--spacing) * 2);
+  background: var(--glass);
+  box-shadow:
+    inset 0 1px 0 var(--glass-shine),
+    0 calc(var(--spacing) * 3) calc(var(--spacing) * 10)
+      calc(var(--spacing) * -3) var(--glass-shadow);
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
+  backdrop-filter: blur(calc(var(--spacing) * 4)) saturate(1.4);
   transition-delay: 0s;
+}
+
+.dark
+  .hint-popover:is([data-placement="above"], [data-placement="below"])
+  .hint-card {
+  --glass: color-mix(in srgb, var(--color-background) 45%, transparent);
+  --glass-edge: color-mix(in srgb, var(--color-foreground) 12%, transparent);
+  --glass-shine: color-mix(in srgb, white 10%, transparent);
+  --glass-shadow: color-mix(in srgb, black 60%, transparent);
+}
+
+.hint-popover:is([data-placement="above"], [data-placement="below"])
+  .hint-media {
+  float: left;
+  width: min(45%, calc(var(--spacing) * 40));
+  margin: var(--spacing) calc(var(--spacing) * 4) calc(var(--spacing) * 2) 0;
+  padding: var(--spacing) var(--spacing) calc(var(--spacing) * 4);
 }
 
 .hint-popover[data-placement="above"] .hint-card {
   top: var(--hint-top);
-  translate: 0 -100%;
   transform: translateY(calc(var(--spacing) * 2)) scale(0.97);
   transform-origin: bottom center;
 }
