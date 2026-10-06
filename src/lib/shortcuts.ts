@@ -20,7 +20,13 @@ function getTheme(): Theme {
 function toggleTheme() {
   const next: Theme = getTheme() === "dark" ? "light" : "dark";
   writeStorage(THEME_KEY, next);
-  document.documentElement.classList.toggle("dark", next === "dark");
+
+  const root = document.documentElement;
+  root.classList.add("theme-switching");
+  root.classList.toggle("dark", next === "dark");
+  void document.body.offsetHeight;
+  root.classList.remove("theme-switching");
+
   render(interacted);
 }
 
